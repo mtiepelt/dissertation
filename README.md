@@ -1,6 +1,6 @@
-<> Author: Marcel Tiepelt >
-<> Source: https://github.com/mtiepelt/dissertation
-<> Version 0.9 > 
+<!-- Author: Marcel Tiepelt -->
+<!-- Source: https://github.com/mtiepelt/dissertation -->
+<!-- Version 0.9 -->
 
 # Repository content
 
