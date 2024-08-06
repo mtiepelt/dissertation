@@ -1,0 +1,38 @@
+% !TEX encoding = UTF-8 Unicode
+% !TEX root = ../diss.tex
+
+
+%*******************************************************
+% Publications
+%*******************************************************
+%\pdfbookmark[1]{Publications}{publications}
+%
+\chapter*{Publications}\addcontentsline{toc}{chapter}{Publications}%
+%This might come in handy for PhD theses: some ideas and figures have appeared previously in the following publications:
+%\noindent Put your publications from the thesis here. The packages \texttt{multibib} or \texttt{bibtopic} etc. can be used to handle multiple different bibliographies in your document.
+% See section 3.8.4
+% http://ftp.fau.de/ctan/macros/latex/contrib/biblatex/doc/biblatex.pdf
+\begin{refsection}[bibliography/own] %The optional argument is a comma-separated list of resources specific to the reference section.
+    \small
+    \nocite{*} % is local to to the enclosing refsection
+    {\let\clearpage\relax
+    \begin{fullwidth}%
+    \printbibliography[heading=none]
+    \end{fullwidth}
+    }
+\end{refsection}
+
+\chapter*{Open-Access Versions}
+
+\begin{refsection}[bibliography/own_openaccess] %The optional argument is a comma-separated list of resources specific to the reference section.
+    \small
+    \nocite{*} % is local to to the enclosing refsection
+    {\let\clearpage\relax% 
+    \begin{fullwidth}%
+
+    \printbibliography[heading=none]
+    \end{fullwidth}
+    }
+\end{refsection}
+%\emph{Attention}: This requires a separate run of \texttt{bibtex} for your \texttt{refsection}, \eg, \texttt{ClassicThesis1-blx} for this file. You might also use \texttt{biber} as the backend for \texttt{biblatex}. See also \url{http://tex.stackexchange.com/questions/128196/problem-with-refsection}.
+

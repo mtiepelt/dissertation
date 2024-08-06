@@ -1,0 +1,106 @@
+% !TEX encoding = UTF-8 Unicode
+% !TEX root = ../diss.tex
+
+
+
+% -----------------------------------------------------
+\chapter{How to use this Template}
+
+
+\lipsum[1-1]%
+\footnote{\detokenize{\footnote}: This is a numbered and referenced footnote in the margin.} 
+\lipsum[2-2]%
+\sidenote{\detokenize{\sidenote}: This is a numbered but \textbf{un}referenced footnote in the margin.}
+\sidecomment{\detokenize{\sidecomment}: This is a unnumbered and unreferenced comment in the margin.}
+
+
+\paragraph{Citation and Floats}
+
+Citations \cite{cryptoeprint:2021/1484} appear as preview in the margin. 
+Floats cannot have \emph{direct} citations, 
+you need to use \detokenize{\citeonly} instead.
+
+Floats include (but are not limited to):
+\begin{itemize}
+	\item captions
+	\item footnote, sidenote, sidecomment
+\end{itemize}
+
+The class offers a \emph{full} citation:
+\begin{itemize}
+ 	\item \detokenize{\fullfullcite}
+ \end{itemize} 
+
+\fullfullcite{cryptoeprint:2020/367}
+
+There is also a command to present your contributions:
+
+\begin{itemize}
+	\item \detokenize{\contentsource}[TEXT]{OFFICIAL CITETATION}{OPEN CITETATION}{Contribution}[IMPLEMENTATION]
+\end{itemize}
+\contentsource[TEXT.]{DBLP:conf/ccs/TiepeltD20}{cryptoeprint:2020/367}{Equal.}[\url{Link to Github}]
+
+
+
+\FloatBarrier
+\paragraph{Figures and Captions}
+
+\begin{figure}
+	\includegraphics[width=\linewidth]{example-image-a}
+	%
+	\caption{Linewidth Figure}
+	\label{LABEL}
+\end{figure}
+
+
+\begin{figure}
+	\begin{fullwidth}
+	\includegraphics[width=\linewidth+\marginparsep]{example-image-a}
+	%
+	\caption{Fullwidth Figure}
+	\label{LABEL}
+	\end{fullwidth}
+\end{figure}
+
+
+\begin{figure}
+	\begin{sidecaption}{Sidecaption}
+		%
+		\includegraphics[width=\linewidth]{example-image-a}
+		%
+		\label{LABEL}
+	\end{sidecaption}
+\end{figure}
+
+\begin{figure}
+	%
+	\subbottom[{Subfigure in Memoir class}\label{LABEL}]{
+          \includegraphics[width=.7\linewidth]{example-image-a}
+    }\\%
+    \subbottom[{Subfigure in Memoir class}\label{LABEL}]{
+          \includegraphics[width=.7\linewidth]{example-image-b}
+    }%
+    \caption{Caption of subfigure in Memoir.}
+    \label{LABEL}
+\end{figure}
+
+
+\FloatBarrier
+% -----------------------------------------------------
+\paragraph{Acronyms}
+
+This is a acronym: \gls{AES}, where only the first occurence has a hyperlink to the reference. 
+\begin{itemize}
+	\item This should not have a hyperref: \gls{AES}. 
+	\item You can reset the reference using \detokenize{\glsresetall}, for example, after every new part. 
+\glsresetall{} 
+Not it should be referenced and expanded again: \gls{AES} 
+	\item If you want hyperlinks on every occurrence, search for ``ACRONYMS'' in \lstinline{0_dissconfig/dissertationpackage.sty} and remove the corresponding lines. 
+\end{itemize}
+
+
+
+
+
+
+

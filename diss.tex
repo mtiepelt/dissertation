@@ -1,0 +1,107 @@
+% !TEX options = -shell-escape
+% --------------------------
+%   Some archives requires the PDF-A1 format. 
+%   This requires the setting, and (possibly) compiling with -shell-escape.
+% --------------------------
+\directlua{pdf.setminorversion(3)}
+% --------------------------
+\documentclass[oneside]{0_dissconfig/dissertation}
+
+% --------------------------
+%   Some archives requires the PDF-A1 format. 
+%   This can be generated using the below package, and (possibly) compiling with -shell-escape.
+% --------------------------
+% 
+%   ! NOTE: CONVERT ALL .png in tikz-pictures INTO .pdfs for this to work.
+% 
+% --------------------------
+\directlua{pdf.setmajorversion(1)}  % only works with lualatex 
+\directlua{pdf.setinfo("Author", "Kevin Marcel Tiepelt")}  % only works with lualatex 
+\usepackage[a-1b]{pdfx}
+
+\pdfinfo { % When using lualatex, I need to set the pdfinfo as follows.  
+  /Title (TITLE),
+  /Author (NAME)
+  /Subject (Dissertation)
+  /Keywords (keyword 1, keyword 2),
+}
+% --------------------------
+
+
+% ---------------------
+% Load dissertation styles and commands
+% ---------------------
+\input{0_dissconfig/config}
+\input{0_customconfig/macros}
+
+
+%********************************************************************
+% Bibliographies
+%*******************************************************
+\addbibresource{bibliography/own.bib}
+\addbibresource{bibliography/own_openaccess.bib}
+\addbibresource{bibliography/reduced_crypto.bib}
+
+% Use this to ensure that Bibliography does not appear in local ToC's
+% https://tex.stackexchange.com/questions/682297/how-to-remove-bibliography-from-local-toc
+% https://tex.stackexchange.com/questions/627560/bibliography-as-a-part/627588#627588
+%\defbibheading{bibliography}[\bibname]{\addpart{#1}}
+
+%********************************************************************
+% Acronyms
+%*******************************************************
+\makeglossaries
+\input{0_customconfig/Acronyms}
+
+\begin{document}
+
+
+%********************************************************************
+% Frontmatter
+%*******************************************************
+%
+\frontmatter{}
+%
+\cleardoublepage\include{FrontBackmatter/titlepage}
+\cleardoublepage\include{FrontBackmatter/Acknowledgments}
+\cleardoublepage\include{FrontBackmatter/abstract}
+\cleardoublepage\include{FrontBackmatter/zusammenfassung}
+\cleardoublepage\include{FrontBackmatter/Publications}
+\cleardoublepage\include{FrontBackmatter/contents}
+ 
+
+%********************************************************************
+% Mainmatter
+%*******************************************************
+
+\mainmatter{}
+
+\cleardoublepage{}
+% % -------------------------
+\input{PartI/PartI}
+
+%\input{FrontBackmatter/conclusion}
+
+
+%********************************************************************
+% Other Stuff in the Back
+%*******************************************************
+\cleardoublepage
+\begin{fullwidth}
+    \include{FrontBackmatter/Bibliography}
+\end{fullwidth}
+\cleardoublepage{}\include{FrontBackmatter/contents_extended}
+
+
+% ******************************************************
+% Backmatter
+%*******************************************************
+\appendix
+\renewcommand{\thechapter}{\Alph{chapter}}
+\cleardoublepage
+\part{Appendix}
+
+%
+\cleardoublepage\include{FrontBackmatter/Declaration}
+\cleardoublepage\include{FrontBackmatter/Colophon}
+\end{document}

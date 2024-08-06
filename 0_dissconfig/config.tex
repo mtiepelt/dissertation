@@ -1,0 +1,156 @@
+% !TEX encoding = UTF-8 Unicode
+% !TEX root = ../diss.tex
+
+% -------------------------------------------------------------
+% Full credit for commands to 
+% https://bitbucket.org/amiede/classicthesis/src/master/ClassicThesis.pdf
+
+\newcommand{\myTitle}{Title\xspace}
+\newcommand{\mySubtitle}{\noindent}
+\newcommand{\myDegree}{Dr.-rer nat.\xspace}
+\newcommand{\myName}{YOU\xspace}
+\newcommand{\myProf}{Prof. Dr. Meta\xspace}
+\newcommand{\myReviewerOne}{Prof. Meta 2\xspace}
+\newcommand{\myReviewerTwo}{Prof. Meta 3\xspace}
+\newcommand{\myFaculty}{Cryptography and Security Group\xspace}
+\newcommand{\myDepartment}{Department of Informatics\xspace}
+\newcommand{\myUni}{Karlsruhe Institute of Technology\xspace}
+\newcommand{\myLocation}{Karlsruhe\xspace}
+\newcommand{\myTime}{August 2024\xspace}
+\newcommand{\myVersion}{\classicthesis}
+% -------------------------------------------------------------
+
+% -------------------------------------------------------------
+%   HYPERREF SETUP
+% -------------------------------------------------------------
+\hypersetup{%
+    linktocpage,
+    bookmarks,
+    bookmarksdepth = section,
+    colorlinks = true,
+    linkcolor = Burgundy,
+    urlcolor = Burgundy,
+    citecolor = Burgundy,
+    pdfpagelayout=TwoPageLeft,
+    % Below does not work with pdftex
+    % pdfauthor = {Kevin Marcel Tiepelt}, 
+    % pdfsubject = {Dissertation: Costing Adversaries on Quantum-secure Cryptography},
+    % pdfkeywords = {post-quantum cryptography, quantum circuits, quantum-annoying, key agreement, lattice enumeration, sphincs, Mersenne, cryptanalysis, LDACS},
+    %
+    % hidelinks  % FOR PRINTING 
+}
+
+
+% --------------------------------------
+%   Color Defs
+% --------------------------------------
+\colorlet{highlightcolor}{Burgundy!10} % Burgundy provided by dissertation.cls
+
+
+% -------------------------------------------------------------
+%   MAIN PACKAGE
+% -------------------------------------------------------------
+\RequirePackage{0_dissconfig/dissertationpackage} % see dissertationpackage.sty
+\RequirePackage{0_dissconfig/delimiters} % see delimiters.sty 
+
+
+% Strongly recommended
+% https://tex.stackexchange.com/questions/6448/what-is-the-difference-between-font-encoding-and-input-encoding
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc} % apparently obsolete for lualatex
+% For non-english writing: \usepackage{babel}
+
+\usepackage{etoc}%
+
+
+% -------------------------------------------------------------
+%   CUSTOM PACKAGES
+% -------------------------------------------------------------
+% Import folders for relative path
+\usepackage{import}
+
+% Figures
+\usepackage{graphicx}
+\usepackage[font={small}]{caption}
+\usepackage[figuresleft]{rotating}
+\usepackage{csvsimple}
+
+\usepackage{afterpage} % avoids blank page before landscape
+
+
+\usepackage{cryptocode} %[n,advantage ,operators,sets, adversary,landau,probability,notions,logic,ff,mm,primitives,events,complexity,asymptotics]
+\usepackage{algorithm}  % Floating algorithm Environment
+\usepackage[noend]{algpseudocode}   % Actual algorithm typesetting, [noend] prevents "end if" etc.
+
+
+\usepackage{tikz}
+\usetikzlibrary{matrix,shapes,positioning,chains, calc, decorations.pathreplacing,angles,quotes, automata, backgrounds, plotmarks, shapes.geometric, patterns}
+\usetikzlibrary{quantikz}
+\usetikzlibrary{mindmap}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{tikzmark}
+
+% Tables
+\usepackage{makecell}
+\usepackage{multicol}
+\usepackage{longtable}
+
+% ToC's
+\usepackage{etoc} % mini toc for chapters
+\usepackage{centeredline} 
+
+
+% Math
+\usepackage{mathtools} % loads amsmath
+\usepackage{array}
+\usepackage{amsfonts,marvosym,amsxtra}
+\usepackage{dsfont} % \mathds
+\usepackage{mathdots}
+
+
+% Boxes
+\usepackage{dashbox}
+
+
+% Misc
+\usepackage{url}
+\usepackage{enumitem}
+\usepackage{siunitx}
+\usepackage{pdflscape}
+\usepackage{xstring} % IfEqCase Macros
+\usepackage{cancel}
+\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage{xspace}
+
+% Tables 
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{multirow}
+
+
+\usepackage{microtype}
+
+\usepackage{listings}
+
+
+\usepackage[section]{placeins}
+
+% -------------------------------------------------------------
+%   Expand files into tables
+%   http://tug.tug.org/pipermail/texhax/2021-September/025344.html
+%   https://tex.stackexchange.com/questions/583927/misplaced-noalign-error-with-input-in-a-table-after-the-2020-fall-latex-releas
+% -------------------------------------------------------------
+\ExplSyntaxOn
+\cs_new:Npn \expandableinput #1
+  { \use:c { @@input } { \file_full_name:n {#1} } }
+\ExplSyntaxOff
+
+
+% ---------------------------------------------------
+%   DRAFTING 
+% ---------------------------------------------------
+%\usepackage{showlabels}
+
+\usepackage{todonotes}
+
+\usepackage{lipsum}  

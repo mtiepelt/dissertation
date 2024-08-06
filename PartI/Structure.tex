@@ -1,0 +1,68 @@
+% !TEX encoding = UTF-8 Unicode
+% !TEX root = ../diss.tex
+
+
+% -----------------------------------------------------
+\chapter{Structure}
+
+The template was designed using 
+
+\begin{itemize}
+	\item LuaHBTex, Version 1.18.0 (TeX Live 2024)
+\end{itemize}
+
+% -----------------------------------------------------
+\paragraph{Configuration}
+
+\begin{description}
+	\item[Template] The main config are stored under 
+	\begin{itemize}
+	 	\item \lstinline{/0_dissconfig}
+	 \end{itemize} 
+	 You should adapt \lstinline{/0_dissconfig/config.tex}. There is space to add all your ``custom'' packages there.
+	 %
+	 \item[Other] The custom configs are stored under 
+	 \begin{itemize}
+	 	\item \lstinline{/0_customconfig}
+	 \end{itemize} 
+	 Currently, that holds acronyms and custom macros. I did not put the packages here, because I think keeping them as close to each other as possible makes it easier to avoid conflicts.
+\end{description}
+
+
+
+
+
+% -----------------------------------------------------
+\paragraph{Bibliography}
+
+\begin{description}
+	\item [Bibliography files] Bibliography files go into 
+	\begin{itemize}
+		\item \lstinline{/bibliography}
+	\end{itemize}
+		There are two special files for the \lstinline{Publication} sections:
+
+	\begin{itemize}
+		\item \lstinline{/bibliography/own.bib} to hold bibliography of you own publications.
+		\item \lstinline{/bibliography/own_openaccess.bib} to hold open-access (for instance, ePrint or arXiv) bibliography of you own publications.
+	\end{itemize}
+	%
+	\item[Document] The bibliography is added to the document via 
+	\begin{itemize}
+		\item \lstinline{/FrontBackmatter/Biblipgraphy.tex}
+		\item \lstinline{/FrontBackmatter/Publications.tex}
+	\end{itemize}
+	%
+	\item [Biblatex] If you use biblated with cryptobib in a folder called (say, in a folder called \lstinline{cryptobiblink}), I strongly recommend to use 
+	\href{https://github.com/thomwiggers/extract_from_bibliography/blob/main/extract_from_bibliography.py}{Extract From Bibliography}
+	to extract the relevant entries via 
+
+	\begin{lstlisting}[breaklines=true]
+	python3 extract_from_bibliography.py diss.bcf cryptobiblink/crypto.bib cryptobiblink/dummy.bib  > bibliography/reduced_crypto.bib
+	\end{lstlisting}
+	%
+	I did not figure out what the 3rd input (``dummy.bib'') does, but the above worked flawlessly for me. 
+	%
+	This will significantly speed-up the compilation.
+\end{description}
+

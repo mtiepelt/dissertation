@@ -1,0 +1,95 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{dissertationpackage}[2024/08/01 v0.2 Dissertation Package]
+
+% -------------------------------------------------------------
+%   PACKAGES
+% -------------------------------------------------------------
+\RequirePackage[many]{tcolorbox}
+\RequirePackage[acronym]{glossaries}
+\RequirePackage{biblatex}
+
+
+\RequirePackage{csquotes}
+\RequirePackage{amsmath, amsthm, mathtools} % must be loadded before cleveref
+\RequirePackage[capitalise,nameinlink,noabbrev]{cleveref} % must be loadded after hyperref, which is loaded in dissertation.cls
+
+% -------------------------------------------------------------
+%   COMMANDS
+% -------------------------------------------------------------
+% PUBLIC
+\newcommand{\contentsource}[4][The content was largely taken verbatim from below publication.]{\def\argtxt{#1}\def\argone{#2}\def\argtwo{#3}\def\argthree{#4}\@contentsourceimpl}
+
+% PRIVATE
+\newcommand{\@contentsourceimpl}[1][]{
+  \begin{tcolorbox}[enhanced,%
+    attach boxed title to top left={xshift=5mm, yshift=-3mm},%
+    colback=white,%
+    colframe=Burgundy, %highlightcolor,%
+    coltitle=black,
+    colbacktitle=white,%
+    title=Content Sources,%
+    boxrule=1pt
+    %fonttitle=\bfseries,%
+    %boxed title style={size=small,colframe=red!50!black}]%
+    ]%
+    \medskip 
+    \argtxt% 
+    \begin{description}
+      \item[Publication] $~$ \\ \fullfullcite{\argone}%
+      \item[Open-Access Publication] $ $ \\ \fullfullcite{\argtwo}%
+      \ifx\relax#1\relax%
+      \else%
+      \item[Implementation] $~$\\ #1 %
+      \fi%
+      \item[Contribution] \argthree%
+    \end{description}
+  \end{tcolorbox}
+}
+
+% -------------------------------------------------------------
+% Full credit to 
+% https://bitbucket.org/amiede/classicthesis/src/master/ClassicThesis.pdf
+% 
+\providecommand{\mLyX}{L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
+\newcommand{\ie}{i.\,e.}
+\newcommand{\Ie}{I.\,e.}
+\newcommand{\eg}{e.\,g.}
+\newcommand{\Eg}{E.\,g.}
+% -------------------------------------------------------------
+
+
+% -------------------------------------------------------------
+%   ACRONYMS
+% -------------------------------------------------------------
+
+% ---------------------------------------------------
+% LINK acronyms only on first occurence
+% https://tex.stackexchange.com/questions/109122/latex-glossaries-hyperref-link-only-the-first-occurance-of-an-entry-in-each-sec
+% ---------------
+\makeatletter
+\renewcommand*{\glslinkcheckfirsthyperhook}{%
+  \ifglsused{\glslabel}%
+  {%
+    \setkeys{glslink}{hyper=false}%
+  }%
+  {}%
+}
+% ---------------------------------------------------
+
+
+% -------------------------------------------------------------
+%   BIBLIOGRAPHY 
+% -------------------------------------------------------------
+% Other options have to be set at loading time, in dissertation.cls 
+\ExecuteBibliographyOptions{
+    hyperref=true,
+    maxbibnames=20,
+    maxcitenames=2,
+    %giveninits=true,
+    sorting=nyt,
+    sortcites=false,
+    citetracker=true,
+    pagetracker=true,
+    backref,
+}
+
