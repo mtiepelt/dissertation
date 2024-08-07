@@ -11,13 +11,15 @@ Additionally, it contains tools that I used to merge paper content, manage the b
 
 ## TeX-Template
 
-This template was written using 
+This template was designed using 
 
 `LuaHBTex, Version 1.18.0 (TeX Live 2024)`
 
-Running it with another TeX-engine (probably) requires to remove to the `directlua` command in diss.tex.
+but also works with `XeTeX`. 
 
-If you ever have issues compiling, I would recommend to try to compile `pdflatex`. That's because I have had errors with the marginpars that would be ignored by `lualatex` but on which `pdflatex` would halt. 
+`pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024)`. 
+
+If you ever run into compile error, I recommend to "debug" with both, `lualatex` and `pdflatex`. That's because I have had errors with the marginpars that would be ignored by `lualatex` but on which `pdflatex` would halt. 
 
 ### Changes 
 
