@@ -15,9 +15,11 @@ This template was designed using
 
 `LuaHBTex, Version 1.18.0 (TeX Live 2024)`
 
-but also works with `XeTeX`. 
+but also works with `pdflatex`.
 
-`pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024)`. 
+`pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024)`.  
+  
+At this point, unfortunately, it does NOT work with XeTeX.
 
 If you ever run into compile error, I recommend to "debug" with both, `lualatex` and `pdflatex`. That's because I have had errors with the marginpars that would be ignored by `lualatex` but on which `pdflatex` would halt. 
 
