@@ -5,7 +5,7 @@
 % --------------------------
 
 % --------------------------
-\documentclass[oneside]{0_dissconfig/dissertation}
+\documentclass[oneside]{dissertation}
 
 % --------------------------
 %   Some archives requires the PDF-A1 format. 
@@ -15,14 +15,13 @@
 %   ! NOTE: CONVERT ALL .png in tikz-pictures INTO .pdfs for this to work.
 % 
 % --------------------------
-\usepackage{iftex}
 \ifluatex
   \directlua{pdf.setminorversion(3)} % possibly, this has to go BEFORE 'documentclass'
   \directlua{pdf.setmajorversion(1)}  % only works with lualatex 
   \directlua{pdf.setinfo("Author", "Kevin Marcel Tiepelt")}  % only works with lualatex 
 \fi
-\usepackage[a-1b]{pdfx}
 
+\usepackage[a-1b]{pdfx}
 \pdfinfo { % When using lualatex, I need to set the pdfinfo as follows.  
   /Title (TITLE),
   /Author (NAME)

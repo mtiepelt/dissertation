@@ -1,8 +1,5 @@
-% dissertation.cls was largely provided by 
-% https://github.com/pfasante/phd_thesis/
-
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{dissertation}[2024/08/01 v0.1 Dissertation Class]
+\ProvidesClass{dissertation}[2024/08/01 v0.2 Dissertation Class]
 
 \DeclareOption{draft}{\PassOptionsToClass{\CurrentOption}{memoir}}
 \DeclareOption{oneside}{\PassOptionsToClass{\CurrentOption}{memoir}}
@@ -19,7 +16,14 @@
 % -------------------------------------------------------------
 %   PACKAGES
 % -------------------------------------------------------------
-\RequirePackage{xcolor} % need to load this once without options, or lualatex throws an error
+
+\RequirePackage{iftex}
+\ifluatex
+  \PassOptionsToPackage{luatex,dvipsnames}{xcolor}
+\else
+    \PassOptionsToPackage{pdftex,dvipsnames}{xcolor}
+\fi 
+\RequirePackage{xcolor} %
 \RequirePackage{paralist} % this must stay here 
                           % 
 %%% HyperRef %%%
@@ -130,6 +134,31 @@
     \restoregeometry
 }
 
+% implements a new environment for figures, tables, etc
+% that are able to spread the full width of the page,
+% while keeping the caption on the side margin
+\newlength{\fullwidthlen}
+\setlength{\fullwidthlen}{\marginparwidth}
+\addtolength{\fullwidthlen}{\marginparsep}
+
+% \newenvironment{fullwidthfig}{%
+%   \begin{adjustwidth*}{}{-\fullwidthlen}%
+% }{%
+%   \end{adjustwidth*}%
+% }
+
+% Example on how to use the fullwidthfig env
+% \begin{figure}[t]
+%   \begin{fullwidth}
+%     \includegraphics[width=\linewidth+\marginparsep]{demo}
+%   \end{fullwidth}
+%   \vspace{-\baselineskip}\vspace{-\baselineskip}
+%   \sideparmargin{outer}
+%   \sidepar{\vspace{\baselineskip}
+%     \caption{Caption for a full-width figure appearing in the margin
+%       below it.}}
+% \end{figure}
+
 
 % -------------------------------------------------------------
 %   TEXT STYLES 
@@ -191,10 +220,12 @@
 \renewcommand{\cftchapterformatpnum}[1]{\small #1}
 \renewcommand{\cftsectionformatpnum}[1]{\small #1}
 \renewcommand{\cftsubsectionformatpnum}[1]{\small #1}
+%\renewcommand{\cftsubsubsectionformatpnum}[1]{\small #1} % added
 %
 \renewcommand{\cftchapterafterpnum}{\vspace{2pt}}
 \renewcommand{\cftsectionafterpnum}{\vspace{2pt}}
 \renewcommand{\cftsubsectionafterpnum}{\vspace{2pt}}
+%\renewcommand{\cftsubsubsectionafterpnum}{\vspace{2pt}} % added
 
 \renewcommand{\cftchapterfont}{%
 \scshape\MakeTextLowercase%
@@ -251,6 +282,7 @@
 \newcommand{\sidecomment}[1]{%                             a simple margin note
      \marginpar{\footnotesize#1}% the note
 }
+
 
 %https://tex.stackexchange.com/questions/428891/sidecaption-in-memoir-in-wrong-margin-when-floated-to-next-page
 \strictpagechecktrue
@@ -356,7 +388,7 @@
       \printfield{labelprefix}%
       \printfield{labelalpha}%
       \printfield{extraalpha}}
-    \setunit{\addnbspace}%
+nit{\addnbspace}%
     \printnames{labelname}%
     \setunit{\printdelim{nametitledelim}}%
     \printfield[citetitle]{labeltitle}%

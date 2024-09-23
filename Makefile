@@ -1,5 +1,10 @@
 DOC := diss
 
+# You want latexmk to *always* run, because make does not have all the info.
+# Also, include non-file targets in .PHONY so they are run regardless of any
+# file of the given name existing.
+.PHONY: $(DOC).pdf all double clean cleanall 
+
 single: 
 	lualatex -file-line-error $(DOC)
 
@@ -9,8 +14,9 @@ double:
 
 all: 
 	lualatex --draftmode -file-line-error $(DOC)
+	#biber $(DOC) 
 	makeglossaries $(DOC)
-	latexmk -pdflatex=lualatex -pdf $(DOC) # no local configuration file anymore
+	latexmk -file-line-error -pdflua $(DOC) # no local configuration file anymore
 
 #extract:
 #	python3 extract_from_bibliography.py $(DOC).bcf cryptobiblink/crypto.bib cryptobiblink/dummy.bib  > cryptobiblink/reduced_crypto.bib
@@ -18,8 +24,10 @@ all:
 debuglua: cleanall 
 	lualatex --draftmode -file-line-error $(DOC).tex
 	biber --debug $(DOC) 
-	lualatex -file-line-error $(DOC).tex
-
+	lualatex -file-line-error -e '$max_repeat=2' $(DOC).tex  
+	# -e '$max_repeat=5' # (default: 5) limit number of repetitions
+	# -interaction=nonstopmode
+	#
 debugpdf: cleanall 
 	pdflatex --draftmode -file-line-error $(DOC).tex
 	biber --debug $(DOC) 
@@ -37,15 +45,14 @@ bib:
 	
 clean:
 	@latexmk -c
+	#@find . -name "*.aux" -type f -delete
+	#@find . -name "*.log" -type f -delete
+
 
 cleanall: clean 
-	@find . -name "*.aux" -type f -delete
-	@find . -name "*.log" -type f -delete
-	@find . -name "*.fls" -type f -delete
-
 	-rm -f $(DOC).pdf
 	-rm -f $(DOC).thm
-	-rm -f pdfa.xmpi 
+	-rm -f $(DOC).log
 
 	-rm -f $(DOC).blg 
 	-rm -f $(DOC).blg 
@@ -64,6 +71,9 @@ cleanall: clean
 	-rm -f $(DOC).mtc 
 	-rm -f $(DOC).mtc0 
 	-rm -f $(DOC).auxlock
+	
+	# pdfa
+	-rm -f pdfa.xmpi
 
 	# makeindex
 	-rm -f $(DOC).ist 

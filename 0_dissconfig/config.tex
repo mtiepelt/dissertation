@@ -50,14 +50,18 @@
 % -------------------------------------------------------------
 %   MAIN PACKAGE
 % -------------------------------------------------------------
-\RequirePackage{0_dissconfig/dissertationpackage} % see dissertationpackage.sty
-\RequirePackage{0_dissconfig/delimiters} % see delimiters.sty 
+\usepackage{dissertationpackage} % see dissertationpackage.sty
+\usepackage{0_dissconfig/delimiters} % see delimiters.sty 
 
 
 % Strongly recommended
 % https://tex.stackexchange.com/questions/6448/what-is-the-difference-between-font-encoding-and-input-encoding
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc} % apparently obsolete for lualatex
+\ifluatex 
+  % None 
+\else
+    \usepackage[utf8]{inputenc}
+    \usepackage[T1]{fontenc}
+\fi
 % For non-english writing: \usepackage{babel}
 
 \usepackage{etoc}%
@@ -68,6 +72,7 @@
 % -------------------------------------------------------------
 % Import folders for relative path
 \usepackage{import}
+\usepackage{orcidlink} 
 
 % Figures
 \usepackage{graphicx}
@@ -85,7 +90,7 @@
 
 \usepackage{tikz}
 \usetikzlibrary{matrix,shapes,positioning,chains, calc, decorations.pathreplacing,angles,quotes, automata, backgrounds, plotmarks, shapes.geometric, patterns}
-\usetikzlibrary{quantikz}
+\usetikzlibrary{quantikz2}
 \usetikzlibrary{mindmap}
 \usetikzlibrary{arrows.meta}
 \usetikzlibrary{tikzmark}

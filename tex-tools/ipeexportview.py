@@ -11,6 +11,8 @@ parser.add_argument('--dest', required=True, help='Destination folder for export
 parser.add_argument('--first', required=False, type=int, default=1, help='Number of first view to be exported.')
 parser.add_argument('--last', required=True, type=int, help='Number of last view to be exported.')
 
+parser.add_argument('--page', required=True, type=int, default=1, help='Page to be exported.')
+
 parser.add_argument('--dpi', required=False, type=int, default=300, help='DPI of exported png.')
 
 parser.add_argument('--transparent', required=False, action='store_true', help='Transparent png. Causes weird shades for png in beamer.')
@@ -24,9 +26,9 @@ fType = args.type
 for i in range(args.first, args.last+1):
 	
 	if args.transparent:
-		os.system(f'iperender -{fType} -transparent -resolution {args.dpi} -view {i} {args.ipefile} {args.dest}/{args.ipefile}_{i}.{fType}')
+		os.system(f'iperender -{fType} -transparent -resolution {args.dpi} -view {i} -page {args.page} {args.ipefile} {args.dest}/{args.ipefile}_{args.page}_{i}.{fType}')
 	else:
-		os.system(f'iperender -{fType} -resolution {args.dpi} -view {i} {args.ipefile} {args.dest}/{args.ipefile}_{i}.{fType}')
+		os.system(f'iperender -{fType} -resolution {args.dpi} -view {i} -page {args.page} {args.ipefile} {args.dest}/{args.ipefile}_{args.page}_{i}.{fType}')
 
  
 

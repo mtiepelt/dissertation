@@ -19,6 +19,7 @@
 % PUBLIC
 \newcommand{\contentsource}[4][The content was largely taken verbatim from below publication.]{\def\argtxt{#1}\def\argone{#2}\def\argtwo{#3}\def\argthree{#4}\@contentsourceimpl}
 
+
 % PRIVATE
 \newcommand{\@contentsourceimpl}[1][]{
   \begin{tcolorbox}[enhanced,%
@@ -66,14 +67,14 @@
 % LINK acronyms only on first occurence
 % https://tex.stackexchange.com/questions/109122/latex-glossaries-hyperref-link-only-the-first-occurance-of-an-entry-in-each-sec
 % ---------------
-\makeatletter
-\renewcommand*{\glslinkcheckfirsthyperhook}{%
-  \ifglsused{\glslabel}%
-  {%
-    \setkeys{glslink}{hyper=false}%
-  }%
-  {}%
-}
+                      % \makeatletter
+                      % \renewcommand*{\glslinkcheckfirsthyperhook}{%
+                      %   \ifglsused{\glslabel}%
+                      %   {%
+                      %     \setkeys{glslink}{hyper=false}%
+                      %   }%
+                      %   {}%
+                      % }
 % ---------------------------------------------------
 
 
