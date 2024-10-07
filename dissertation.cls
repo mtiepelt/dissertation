@@ -14,9 +14,9 @@
 
 
 % -------------------------------------------------------------
-%   PACKAGES
+%   PACKAGES, this load order is required
 % -------------------------------------------------------------
-
+%%% HyperRef %%%
 \RequirePackage{iftex}
 \ifluatex
   \PassOptionsToPackage{luatex,dvipsnames}{xcolor}
@@ -26,9 +26,7 @@
 \RequirePackage{xcolor} %
 \RequirePackage{paralist} % this must stay here 
                           % 
-%%% HyperRef %%%
-\RequirePackage[pdfa]{hyperref}
-
+                          % 
 % -------------------------------------------------------------
 %   COLORS
 % -------------------------------------------------------------
@@ -141,17 +139,39 @@
 \setlength{\fullwidthlen}{\marginparwidth}
 \addtolength{\fullwidthlen}{\marginparsep}
 
-% \newenvironment{fullwidthfig}{%
-%   \begin{adjustwidth*}{}{-\fullwidthlen}%
-% }{%
-%   \end{adjustwidth*}%
-% }
+
+%\makeatletter
+%preamble
+\if@twoside%
+   %%% put the stuff for true here (twoside=true)
+   \newenvironment{fullwidthfig}{%
+    \begin{adjustwidth*}{}{-\fullwidthlen}% this adjusts the '\linewidth' around environment by 'fullwidthlen' on right side 
+    }{%
+      \end{adjustwidth*}%
+    }
+\else% one-sided: needs to adjust environment based on odd or even page
+   %%% put the stuff for false here (twoside=false)
+   \newenvironment{fullwidthfig}{%
+    \checkoddpage
+    \ifoddpage
+      \begin{adjustwidth*}{}{-\fullwidthlen}% this adjusts the '\linewidth' around environment by '-fullwidthlen' on right side 
+    \else 
+      \begin{adjustwidth*}{-\fullwidthlen}{}% this adjusts the '\linewidth' around environment by '-fullwidthlen' on left side 
+    \fi 
+    }{%
+      \end{adjustwidth*}%
+    }
+\fi%  
+%\makeatother
+
+
+
 
 % Example on how to use the fullwidthfig env
 % \begin{figure}[t]
-%   \begin{fullwidth}
+%   \begin{fullwidthfig}
 %     \includegraphics[width=\linewidth+\marginparsep]{demo}
-%   \end{fullwidth}
+%   \end{fullwidthfig}
 %   \vspace{-\baselineskip}\vspace{-\baselineskip}
 %   \sideparmargin{outer}
 %   \sidepar{\vspace{\baselineskip}
@@ -244,9 +264,12 @@
 
 % https://tex.stackexchange.com/questions/275565/tufte-layout-in-painless-memoir
 % Attention: does not work when \sidebar is used
-% \RequirePackage{marginfix}
+% https://ftp.rrzn.uni-hannover.de/pub/mirror/tex-archive/macros/latex/contrib/marginfix/marginfix.pdf
+% Fixes overfull margins 
+\RequirePackage{marginfix}    % This allows marginpar (especially cite's to be moved vertically up on the page, resulting in fewer positioning issues)
 % Apparently marginfix seems two swollow some notes:
 % https://tex.stackexchange.com/questions/352596/package-marginfix-swallows-some-margin-notes
+% % Apparently this was fixed.
 
 % Margin Notes like Footnotes:
 % http://latex.org/forum/viewtopic.php?t=11761
@@ -279,7 +302,7 @@
 % --------------------------
 %   Un-numbered, Unreferenced
 % --------------------------
-\newcommand{\sidecomment}[1]{%                             a simple margin note
+\providecommand{\sidecomment}[1]{%                             a simple margin note
      \marginpar{\footnotesize#1}% the note
 }
 
@@ -388,7 +411,7 @@
       \printfield{labelprefix}%
       \printfield{labelalpha}%
       \printfield{extraalpha}}
-nit{\addnbspace}%
+      {\addnbspace}%
     \printnames{labelname}%
     \setunit{\printdelim{nametitledelim}}%
     \printfield[citetitle]{labeltitle}%

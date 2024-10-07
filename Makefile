@@ -9,47 +9,43 @@ single:
 	lualatex -file-line-error $(DOC)
 
 double:
-	lualatex --draftmode -file-line-error $(DOC)
+	lualatex --interaction=batchmode --draftmode -file-line-error $(DOC)
 	lualatex --synctex=1 -file-line-error $(DOC)
 
 all: 
-	lualatex --draftmode -file-line-error $(DOC)
-	#biber $(DOC) 
-	makeglossaries $(DOC)
-	latexmk -file-line-error -pdflua $(DOC) # no local configuration file anymore
+	lualatex --interaction=batchmode --draftmode -file-line-error $(DOC) 
+	makeglossaries $(DOC) 
+	latexmk -file-line-error -lualatex -silent $(DOC)  
+
+allpdf: 
+	pdflatex --interaction=batchmode --draftmode -file-line-error $(DOC) 
+	makeglossaries $(DOC) 
+	latexmk -file-line-error -pdf -silent $(DOC)  
 
 #extract:
 #	python3 extract_from_bibliography.py $(DOC).bcf cryptobiblink/crypto.bib cryptobiblink/dummy.bib  > cryptobiblink/reduced_crypto.bib
 
-debuglua: cleanall 
-	lualatex --draftmode -file-line-error $(DOC).tex
-	biber --debug $(DOC) 
-	lualatex -file-line-error -e '$max_repeat=2' $(DOC).tex  
-	# -e '$max_repeat=5' # (default: 5) limit number of repetitions
-	# -interaction=nonstopmode
-	#
-debugpdf: cleanall 
-	pdflatex --draftmode -file-line-error $(DOC).tex
-	biber --debug $(DOC) 
-	pdflatex -file-line-error $(DOC).tex
-
 gloss:
-	lualatex --draftmode -file-line-error $(DOC)
+	lualatex --interaction=batchmode --draftmode -file-line-error $(DOC)
 	makeglossaries $(DOC)
-	lualatex -file-line-error $(DOC)
+	lualatex --interaction=batchmode -file-line-error $(DOC)
 	
 bib:
-	lualatex --draftmode -file-line-error $(DOC)
+	lualatex --interaction=batchmode --draftmode -file-line-error $(DOC)
 	biber --debug $(DOC) 
-	lualatex -file-line-error $(DOC)
+	lualatex --interaction=batchmode --draftmode -file-line-error $(DOC)
+	lualatex --interaction=batchmode -file-line-error $(DOC)
 	
 clean:
 	@latexmk -c
 	#@find . -name "*.aux" -type f -delete
 	#@find . -name "*.log" -type f -delete
 
-
-cleanall: clean 
+cleanaux:
+	find . -name "*.aux" -type f -delete
+	
+cleanall: 
+	latexmk -C
 	-rm -f $(DOC).pdf
 	-rm -f $(DOC).thm
 	-rm -f $(DOC).log
@@ -97,6 +93,8 @@ cleanall: clean
 	-rm -f diss.bbl-SAVE-ERROR
 	-rm -f diss.blg
 	-rm -f diss1-*
+
+	find . -name "*.aux" -type f -delete
 
 
 

@@ -17,8 +17,16 @@
 \paragraph{Citation and Floats}
 
 Citations \cite{cryptoeprint:2021/1484} appear as preview in the margin. 
-Floats cannot have \emph{direct} citations, 
-you need to use \detokenize{\citeonly} instead.
+Floats cannot have footnotes (without modifications) and citations with \detokenize{\cite} act like footnotes in this template. 
+Consequently, 
+you need to use \detokenize{\citeonly} instead, 
+which \emph{only} print the citation in the text but not in the margin. 
+Additionally, 
+if there is too little space in the margin, 
+LaTeX might fail to find a valid positioning. 
+This might, for example, cause \emph{latexmk} too loop infinitely (or throw an error). 
+To easiest to avoid this is to limit the number of note in the margin, especially if there is a \emph{full-width figure} on the page.
+
 
 Floats include (but are not limited to):
 \begin{itemize}
@@ -38,9 +46,14 @@ There is also a command to present your contributions:
 \begin{itemize}
 	\item \detokenize{\contentsource}[TEXT]{OFFICIAL CITETATION}{OPEN CITETATION}{Contribution}[IMPLEMENTATION]
 \end{itemize}
-\contentsource[TEXT.]{DBLP:conf/ccs/TiepeltD20}{cryptoeprint:2020/367}{Equal.}[\url{Link to Github}]
 
-
+\blockmargin
+\begin{figure}[th]
+\begin{fullwidthfig}
+\contentsource[TEXT.]{DBLP:conf/ccs/TiepeltD20}{cryptoeprint:2020/367}{Everyone did everything.}[\url{Link to Github}]
+\end{fullwidthfig}
+\end{figure}
+\unblockmargin
 
 \FloatBarrier
 \paragraph{Figures and Captions}
@@ -52,15 +65,18 @@ There is also a command to present your contributions:
 	\label{LABEL1}
 \end{figure}
 
+You might want to put \detokenize{\blockmargin}, \detokenize{\unblockmargin} around your ``fullwidth'' floats to avoid LaTeX trying to put a float in the (non-existing) margin next to it. 
 
+\blockmargin
 \begin{figure}
-	\begin{fullwidth}
-	\includegraphics[width=\linewidth+\marginparsep]{example-image-a}
+	\begin{fullwidthfig}
+	\includegraphics[width=\linewidth]{example-image-a}
 	%
 	\caption{Fullwidth Figure}
 	\label{LABEL2}
-	\end{fullwidth}
+	\end{fullwidthfig}
 \end{figure}
+\unblockmargin
 
 
 \begin{figure}

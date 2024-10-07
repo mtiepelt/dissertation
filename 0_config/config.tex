@@ -1,0 +1,223 @@
+% !TEX encoding = UTF-8 Unicode
+% !TEX root = ../diss.tex
+
+% -------------------------------------------------------------
+%   MAIN PACKAGE
+% -------------------------------------------------------------
+\usepackage{dissertationpackage} % see dissertationpackage.sty
+
+
+
+% -------------------------------------------------------------
+% Full credit for commands to 
+% https://bitbucket.org/amiede/classicthesis/src/master/ClassicThesis.pdf
+
+\newcommand{\myTitle}{TITLE\xspace}
+\newcommand{\mySubtitle}{\noindent}
+\newcommand{\myDegree}{Dr.-rer nat.\xspace}
+\newcommand{\myName}{Your Name\xspace}
+\newcommand{\myProf}{Prof. Dr. Meta\xspace}
+\newcommand{\myReviewerOne}{Prof. Dr. Beta\xspace}
+\newcommand{\myReviewerTwo}{Prof. Dr. Ceta\xspace}
+\newcommand{\myFaculty}{Research Group Name\xspace}
+\newcommand{\myDepartment}{Department of Something\xspace}
+\newcommand{\myUni}{University Name\xspace}
+\newcommand{\myLocation}{City Name\xspace}
+\newcommand{\myTime}{August 2024\xspace}
+\newcommand{\myVersion}{\classicthesis}
+% -------------------------------------------------------------
+
+
+% -------------------------------------------------------------
+%   Automatically sized delimiters using package mathtools
+% -------------------------------------------------------------
+% https://tex.stackexchange.com/questions/1742/automatic-left-and-right-commands/1744#1744
+% -------------------------------------------------------------
+\DeclarePairedDelimiter\autonorm{||}{||}
+\newcommand{\norm}[1]{\ensuremath{\autonorm*{#1}}}
+
+
+%\newcommand{\norm}[1]{\ensuremath{||#1||}}
+
+% -------------------------------------------------------------
+%   ACRONYMS
+% -------------------------------------------------------------
+
+% ---------------------------------------------------
+% LINK acronyms only on first occurence
+% https://tex.stackexchange.com/questions/109122/latex-glossaries-hyperref-link-only-the-first-occurance-of-an-entry-in-each-sec
+% ---------------
+%
+% \makeatletter
+% \renewcommand*{\glslinkcheckfirsthyperhook}{%
+%   \ifglsused{\glslabel}%
+%   {%
+%     \setkeys{glslink}{hyper=false}%
+%   }%
+%   {}%
+% }
+
+% --------------------------------------
+%   Color Defs
+% --------------------------------------
+\colorlet{highlightcolor}{Burgundy!10} % Burgundy provided by dissertation.cls
+
+
+% Strongly recommended
+% https://tex.stackexchange.com/questions/6448/what-is-the-difference-between-font-encoding-and-input-encoding
+\ifluatex 
+  % None 
+\else
+    \usepackage[utf8]{inputenc}
+    \usepackage[T1]{fontenc}
+\fi
+%\setmainfont{Latin Modern Roman}
+% Optional for other languages: \usepackage{babel}
+
+
+\usepackage{etoc}%
+
+% -------------------------------------------------------------
+%   CUSTOM PACKAGES
+% -------------------------------------------------------------
+% Import folders for relative path
+\usepackage{import}
+\usepackage{orcidlink} 
+
+% Figures
+\usepackage{graphicx}
+\usepackage[font={small}]{caption}
+\usepackage[figuresleft]{rotating}
+\usepackage{csvsimple}
+
+\usepackage{afterpage} % avoids blank page before landscape
+
+
+% Math
+\usepackage{array}
+\usepackage{marvosym,amsxtra}
+\usepackage{dsfont} % \mathds
+\usepackage{mathdots}
+
+
+\usepackage{cryptocode} %[n,advantage ,operators,sets, adversary,landau,probability,notions,logic,ff,mm,primitives,events,complexity,asymptotics]
+\usepackage{algorithm}  % Floating algorithm Environment
+\usepackage[noend]{algpseudocode}   % Actual algorithm typesetting, [noend] prevents "end if" etc.
+
+
+\usepackage{tikz}
+\usetikzlibrary{matrix,shapes,positioning,chains, calc, decorations.pathreplacing,angles,quotes, automata, backgrounds, plotmarks, shapes.geometric, patterns}
+\usetikzlibrary{quantikz2}
+\usetikzlibrary{mindmap}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{tikzmark}
+
+% Tables
+\usepackage{makecell}
+\usepackage{multicol}
+\usepackage{longtable}
+\usepackage{centeredline} 
+
+
+% Boxes
+\usepackage{dashbox}
+
+
+% Misc
+\usepackage{url}
+\usepackage{enumitem}
+\usepackage{siunitx}
+\usepackage{pdflscape}
+\usepackage{xstring} % IfEqCase Macros
+\usepackage{cancel}
+\usepackage{xspace}
+
+
+\usepackage{adjustbox}
+
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{multirow}
+
+
+\usepackage{microtype}
+\usepackage[section]{placeins}
+
+
+
+\renewcommand*{\bibsetup}{%
+  \interlinepenalty=10000\relax % default is 5000
+  \widowpenalty=10000\relax
+  \clubpenalty=10000\relax
+  \raggedbottom
+  \frenchspacing
+  \biburlsetup}
+
+% -------------------------------------------------------------
+%   HYPERREF SETUP
+%   hyperref should be loaded as late as possible, after all packages unless specified otherwise
+% -------------------------------------------------------------
+\usepackage[pdfa]{hyperref}
+
+\hypersetup{%
+    linktocpage=true,
+    bookmarks=true,
+    bookmarksdepth = section,
+    colorlinks = true,
+    linkcolor = Burgundy,
+    urlcolor = Burgundy,
+    citecolor = Burgundy,
+    filecolor = Burgundy, 
+    runcolor = Burgundy, 
+    pdfpagelayout=TwoPageLeft,
+    plainpages=false, % http://tex.lickert.net/tipps/destination/index.html
+    pdfpagelabels, 
+    % Below does not work with pdftex
+    % pdfauthor = {Kevin Marcel Tiepelt}, 
+    % pdfsubject = {Dissertation: Costing Adversaries on Quantum-secure Cryptography},
+    % pdfkeywords = {post-quantum cryptography, quantum circuits, quantum-annoying, key agreement, lattice enumeration, sphincs, Mersenne, cryptanalysis, LDACS},
+    %
+    % hidelinks  % FOR PRINTING 
+}
+
+
+% -------------------------------------------------------------
+% cleveref should be loaded 'last', after all packages unless specified otherwise
+% 
+% https://mirror.funkfreundelandshut.de/latex/macros/latex/contrib/cleveref/cleveref.pdf
+% All theorem related packages should be loaded beofre this
+\usepackage[capitalise,nameinlink,noabbrev]{cleveref} % must be loadded after hyperref, which is loaded in dissertation.cls
+
+
+
+% -------------------------------------------------------------
+%   Expand files into tables
+%   http://tug.tug.org/pipermail/texhax/2021-September/025344.html
+%   https://tex.stackexchange.com/questions/583927/misplaced-noalign-error-with-input-in-a-table-after-the-2020-fall-latex-releas
+% -------------------------------------------------------------
+% \ExplSyntaxOn
+% \cs_new:Npn \expandableinput #1
+% { \use:c { @@input } { \file_full_name:n {#1} } }
+% \ExplSyntaxOff
+
+% \ExplSyntaxOn
+% \cs_new:Npn \expandableinput #1
+%   { \use:c { @@input } { \file_full_name:n {#1} } }
+% \AddToHook{env/tabular/begin}
+%   { \cs_set_eq:NN \input \expandableinput }
+% \ExplSyntaxOff
+
+\ExplSyntaxOn
+\cs_new:Npn \expandableinput #1
+  { \use:c { @@input } { \file_full_name:n {#1} } }
+\ExplSyntaxOff
+
+
+% ---------------------------------------------------
+%   DRAFTING 
+% ---------------------------------------------------
+%\usepackage{showlabels}
+\usepackage{listings}
+\usepackage{todonotes}
+\usepackage{lipsum}  
+

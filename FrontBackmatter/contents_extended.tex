@@ -5,18 +5,22 @@
 %*******************************************************
 % Acronyms
 %*******************************************************
-%\phantomsection
-%\pdfbookmark[1]{Acronyms}{acronyms}
-%\markboth{\spacedlowsmallcaps{Acronyms}}{\spacedlowsmallcaps{Acronyms}}
-%\chapter*{Acronyms}
 
-\printglossary[type=\acronymtype]{}
-\addcontentsline{toc}{chapter}{Acronyms}
+\addcontentsline{toc}{part}{Acronyms}
+\begin{fullwidth}
+\printglossary[type=\acronymtype,style=super]{}
+\end{fullwidth}
 \clearpage
 
-\listoffigures*\addcontentsline{toc}{chapter}{List of Figures}
+%\pdfbookmark[0]{\listfigurename}{lof}
+\begin{fullwidth}
+\listoffigures*\addcontentsline{toc}{part}{List of Figures}
+\end{fullwidth}
 \vspace{\baselineskip}
 \clearpage{}
 
-\listoftables*\addcontentsline{toc}{chapter}{List of Tables}
+%\pdfbookmark[0]{\listtablename}{lot}
+\begin{fullwidth}
+\listoftables*\addcontentsline{toc}{part}{List of Tables}
+\end{fullwidth}
 \clearpage{}

@@ -1,6 +1,6 @@
 <!-- Author: Marcel Tiepelt -->
 <!-- Source: https://github.com/mtiepelt/dissertation -->
-<!-- Version 0.9 -->
+<!-- Version 1.0 -->
 
 # Repository content
 
@@ -29,7 +29,7 @@ The base file is the wonderful `dissertation.cls` of
 
 https://github.com/pfasante/phd_thesis/
 
-I removed a lot of content from the `dissertation.cls` that, to me, appeared to be tailored to their thesis, and which I did not need for mine. As part of these changes I added comments to the `dissertation.cls` that helped me find my way around when modifying the style. 
+I removed and reorganized a lot of content from the `dissertation.cls` that, to me, appeared to be tailored to their thesis, and which I did not need for mine. As part of these changes I added comments to the `dissertation.cls` that helped me find my way around when modifying the style. 
 
 #### FrontBackmatter
 
@@ -53,13 +53,11 @@ https://github.com/thomwiggers/extract_from_bibliography/blob/main/extract_from_
 
 to produce a reduced database file.
 
-### 0_dissconfig 
+### 0_config 
 
-This folder holds class files and the config.tex Please adjust the latter to your needs. 
+This folder holds the main configuration file `config.tex`. Please adjust (at least) this to your needs.  
+Further, the folder holds macros and acronyms. 
 
-### 0_customconfig
- 
-This folder holds custom acronyms and custom macros.
 
 ## Makefile 
 

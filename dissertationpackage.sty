@@ -5,20 +5,22 @@
 %   PACKAGES
 % -------------------------------------------------------------
 \RequirePackage[many]{tcolorbox}
-\RequirePackage[acronym]{glossaries}
+\RequirePackage[acronym,
+   % shortcuts,% enable acronym-like commands
+   % nogroupskip,% suppress gap between letter groups
+   % nopostdot% suppress terminating full stop after descriptions
+   ]{glossaries}
 \RequirePackage{biblatex}
 
 
 \RequirePackage{csquotes}
 \RequirePackage{amsmath, amsthm, mathtools} % must be loadded before cleveref
-\RequirePackage[capitalise,nameinlink,noabbrev]{cleveref} % must be loadded after hyperref, which is loaded in dissertation.cls
 
 % -------------------------------------------------------------
 %   COMMANDS
 % -------------------------------------------------------------
 % PUBLIC
 \newcommand{\contentsource}[4][The content was largely taken verbatim from below publication.]{\def\argtxt{#1}\def\argone{#2}\def\argtwo{#3}\def\argthree{#4}\@contentsourceimpl}
-
 
 % PRIVATE
 \newcommand{\@contentsourceimpl}[1][]{
@@ -57,26 +59,6 @@
 \newcommand{\eg}{e.\,g.}
 \newcommand{\Eg}{E.\,g.}
 % -------------------------------------------------------------
-
-
-% -------------------------------------------------------------
-%   ACRONYMS
-% -------------------------------------------------------------
-
-% ---------------------------------------------------
-% LINK acronyms only on first occurence
-% https://tex.stackexchange.com/questions/109122/latex-glossaries-hyperref-link-only-the-first-occurance-of-an-entry-in-each-sec
-% ---------------
-                      % \makeatletter
-                      % \renewcommand*{\glslinkcheckfirsthyperhook}{%
-                      %   \ifglsused{\glslabel}%
-                      %   {%
-                      %     \setkeys{glslink}{hyper=false}%
-                      %   }%
-                      %   {}%
-                      % }
-% ---------------------------------------------------
-
 
 % -------------------------------------------------------------
 %   BIBLIOGRAPHY 
