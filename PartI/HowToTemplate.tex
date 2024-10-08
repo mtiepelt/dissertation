@@ -4,6 +4,7 @@
 
 
 % -----------------------------------------------------
+\cleardoublepage
 \chapter{How to use this Template}
 
 
@@ -115,6 +116,32 @@ Not it should be referenced and expanded again: \gls{AES}
 \end{itemize}
 
 
+
+\FloatBarrier
+% -----------------------------------------------------
+\paragraph{Print vs Digital Version}
+
+We consider the print version to be two-sided, and the digital version to be one-sided. This can be changed as option to the documentclass.
+
+\begin{itemize}
+	\item \detokenize{\documentclass[oneside]{dissertation}}
+	\item \detokenize{\documentclass[twoside]{dissertation}}
+\end{itemize}
+
+In ``\url{0_config/macros.tex}'' we provide two macros that change the behavior of LaTeX according to the option.
+
+\begin{itemize}
+ 	\item \detokenize{\linktocode{LINK}{WORD}}, for example, \linktocode{https://github.com/mtiepelt/dissertation}{implementation}
+ 	\begin{itemize}
+ 		\item embeds the link into a reference for one-sided
+ 		\item prints a footnote with the reference for two-sided
+ 	\end{itemize}
+ 	%
+ 	\item The second macro changes the behavior of \detokenize{\cleardoublepage} such that one-sided and two-sided documents have the same page numbers and numbering. That that there should be a \detokenize{\cleardoublepage} every time LaTeX makes a new page, for example, in front of \detokenize{\part}, \detokenize{\include}, \detokenize{\chapter}, ... 
+ \end{itemize} 
+
+
+\cleardoublepage
 
 
 

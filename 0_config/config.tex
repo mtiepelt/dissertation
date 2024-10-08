@@ -36,27 +36,6 @@
 \DeclarePairedDelimiter\autonorm{||}{||}
 \newcommand{\norm}[1]{\ensuremath{\autonorm*{#1}}}
 
-
-%\newcommand{\norm}[1]{\ensuremath{||#1||}}
-
-% -------------------------------------------------------------
-%   ACRONYMS
-% -------------------------------------------------------------
-
-% ---------------------------------------------------
-% LINK acronyms only on first occurence
-% https://tex.stackexchange.com/questions/109122/latex-glossaries-hyperref-link-only-the-first-occurance-of-an-entry-in-each-sec
-% ---------------
-%
-% \makeatletter
-% \renewcommand*{\glslinkcheckfirsthyperhook}{%
-%   \ifglsused{\glslabel}%
-%   {%
-%     \setkeys{glslink}{hyper=false}%
-%   }%
-%   {}%
-% }
-
 % --------------------------------------
 %   Color Defs
 % --------------------------------------
@@ -71,11 +50,8 @@
     \usepackage[utf8]{inputenc}
     \usepackage[T1]{fontenc}
 \fi
-%\setmainfont{Latin Modern Roman}
 % Optional for other languages: \usepackage{babel}
 
-
-\usepackage{etoc}%
 
 % -------------------------------------------------------------
 %   CUSTOM PACKAGES
@@ -195,17 +171,6 @@
 %   http://tug.tug.org/pipermail/texhax/2021-September/025344.html
 %   https://tex.stackexchange.com/questions/583927/misplaced-noalign-error-with-input-in-a-table-after-the-2020-fall-latex-releas
 % -------------------------------------------------------------
-% \ExplSyntaxOn
-% \cs_new:Npn \expandableinput #1
-% { \use:c { @@input } { \file_full_name:n {#1} } }
-% \ExplSyntaxOff
-
-% \ExplSyntaxOn
-% \cs_new:Npn \expandableinput #1
-%   { \use:c { @@input } { \file_full_name:n {#1} } }
-% \AddToHook{env/tabular/begin}
-%   { \cs_set_eq:NN \input \expandableinput }
-% \ExplSyntaxOff
 
 \ExplSyntaxOn
 \cs_new:Npn \expandableinput #1

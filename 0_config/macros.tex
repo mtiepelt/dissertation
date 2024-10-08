@@ -1,2 +1,58 @@
 
-\newcommand{\somecustommacro}{XYZ}
+
+% --------------------------
+%   Embed links for one-sided (digital) vesion into PDF, but print for two-sided (print-version) as footnotes.
+% --------------------------
+\makeatletter
+%preamble
+\if@twoside%
+   %%% put the stuff for true here (twoside=true)
+   \newcommand{\linktocode}[2]{#2\footnote{\url{#1}}}
+\else%
+   %%% put the stuff for false here (twoside=false)
+   \newcommand{\linktocode}[2]{\href{#1}{#2}}
+\fi%  
+\makeatother
+
+
+
+
+% --------------------------
+%   Match page numbers of one-sided and two-sided document
+% --------------------------
+% https://tex.stackexchange.com/questions/578898/adding-not-removing-blank-pages-onside
+%
+\makeatletter
+% Update \cleardoublepage to be similar in oneside and twoside
+\if@twoside\else
+  \def\cleardoublepage{%
+    \clearpage
+    \ifodd\c@page\else
+      \hbox{}\thispagestyle{cleared}\newpage
+      \if@twocolumn
+        \hbox{}\thispagestyle{cleared}\newpage
+      \fi
+    \fi
+  }
+\fi
+\makeatother
+
+
+
+% -------------------------------------------------------------
+%   ACRONYMS
+% -------------------------------------------------------------
+
+% ---------------------------------------------------
+% LINK acronyms only on first occurence
+% https://tex.stackexchange.com/questions/109122/latex-glossaries-hyperref-link-only-the-first-occurance-of-an-entry-in-each-sec
+% ---------------
+%
+% \makeatletter
+% \renewcommand*{\glslinkcheckfirsthyperhook}{%
+%   \ifglsused{\glslabel}%
+%   {%
+%     \setkeys{glslink}{hyper=false}%
+%   }%
+%   {}%
+% }
