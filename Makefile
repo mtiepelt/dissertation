@@ -1,23 +1,20 @@
-DOC := diss
+DOC := diss#
 
-# You want latexmk to *always* run, because make does not have all the info.
-# Also, include non-file targets in .PHONY so they are run regardless of any
-# file of the given name existing.
-.PHONY: $(DOC).pdf all double clean cleanall 
+.PHONY: cleanall all
 
-single: 
-	lualatex -file-line-error $(DOC)
+single:
+	lualatex -file-line-error --synctex=1 $(DOC)
 
 double:
 	lualatex --interaction=batchmode --draftmode -file-line-error $(DOC)
 	lualatex --synctex=1 -file-line-error $(DOC)
 
-all: 
+all:
 	lualatex --interaction=batchmode --draftmode -file-line-error $(DOC) 
 	makeglossaries $(DOC) 
 	latexmk -file-line-error -lualatex -silent $(DOC)  
 
-allpdf: 
+allpdf:
 	pdflatex --interaction=batchmode --draftmode -file-line-error $(DOC) 
 	makeglossaries $(DOC) 
 	latexmk -file-line-error -pdf -silent $(DOC)  
@@ -25,26 +22,27 @@ allpdf:
 #extract:
 #	python3 extract_from_bibliography.py $(DOC).bcf cryptobiblink/crypto.bib cryptobiblink/dummy.bib  > cryptobiblink/reduced_crypto.bib
 
-gloss:
+gloss: 
 	lualatex --interaction=batchmode --draftmode -file-line-error $(DOC)
 	makeglossaries $(DOC)
 	lualatex --interaction=batchmode -file-line-error $(DOC)
 	
-bib:
+bib: 
 	lualatex --interaction=batchmode --draftmode -file-line-error $(DOC)
 	biber --debug $(DOC) 
 	lualatex --interaction=batchmode --draftmode -file-line-error $(DOC)
 	lualatex --interaction=batchmode -file-line-error $(DOC)
 	
-clean:
+clean: 
 	@latexmk -c
 	#@find . -name "*.aux" -type f -delete
 	#@find . -name "*.log" -type f -delete
 
-cleanaux:
+cleanaux: $(DOCONE)
 	find . -name "*.aux" -type f -delete
-	
-cleanall: 
+
+
+cleanall:
 	latexmk -C
 	-rm -f $(DOC).pdf
 	-rm -f $(DOC).thm
@@ -90,9 +88,9 @@ cleanall:
 
 	# Other 
 	-rm -f *.eps 
-	-rm -f diss.bbl-SAVE-ERROR
-	-rm -f diss.blg
-	-rm -f diss1-*
+	-rm -f $(DOC).bbl-SAVE-ERROR
+	-rm -f $(DOC).blg
+	-rm -f $(DOC)1-*
 
 	find . -name "*.aux" -type f -delete
 

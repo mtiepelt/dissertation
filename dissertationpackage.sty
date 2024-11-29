@@ -1,17 +1,16 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{dissertationpackage}[2024/08/01 v0.2 Dissertation Package]
+\ProvidesPackage{dissertationpackage}[2024/08/01 v1.0 Dissertation Package]
 
 % -------------------------------------------------------------
 %   PACKAGES
 % -------------------------------------------------------------
 \RequirePackage[many]{tcolorbox}
-\RequirePackage[acronym,
+\RequirePackage[acronym
    % shortcuts,% enable acronym-like commands
    % nogroupskip,% suppress gap between letter groups
    % nopostdot% suppress terminating full stop after descriptions
    ]{glossaries}
 \RequirePackage{biblatex}
-
 
 \RequirePackage{csquotes}
 \RequirePackage{amsmath, amsthm, mathtools} % must be loadded before cleveref
@@ -67,7 +66,7 @@
 \ExecuteBibliographyOptions{
     hyperref=true,
     maxbibnames=20,
-    maxcitenames=2,
+    maxcitenames=3,
     %giveninits=true,
     sorting=nyt,
     sortcites=false,
@@ -75,4 +74,5 @@
     pagetracker=true,
     backref,
 }
+
 

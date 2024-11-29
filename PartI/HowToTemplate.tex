@@ -7,6 +7,10 @@
 \cleardoublepage
 \chapter{How to use this Template}
 
+\section{Dummy Section}
+
+We need a section to show that in the ToC the numbers of the ``sections'' also contain a link to the respective page.
+
 
 \lipsum[1-1]%
 \footnote{\detokenize{\footnote}: This is a numbered and referenced footnote in the margin.} 
@@ -15,7 +19,7 @@
 \sidecomment{\detokenize{\sidecomment}: This is a unnumbered and unreferenced comment in the margin.}
 
 
-\paragraph{Citation and Floats}
+\paragraph{Citattion}
 
 Citations \cite{cryptoeprint:2021/1484} appear as preview in the margin. 
 Floats cannot have footnotes (without modifications) and citations with \detokenize{\cite} act like footnotes in this template. 
@@ -48,6 +52,22 @@ There is also a command to present your contributions:
 	\item \detokenize{\contentsource}[TEXT]{OFFICIAL CITETATION}{OPEN CITETATION}{Contribution}[IMPLEMENTATION]
 \end{itemize}
 
+
+\paragraph{Fullwidth}
+
+The classfile offers to use the full width of the page:
+
+\begin{itemize}
+	\item The environment ``fullwidth'' sets the fullwidth for a page. 
+	\item The environment ``fullwidthfig'' can be used to only have part of a page (for example a figure) span the full width. Using ``fullwidthfig'' outside of a float can result issues with the margins. 
+\end{itemize}
+
+
+\paragraph{Floats}
+
+
+You might want to put \detokenize{\blockmargin}, \detokenize{\unblockmargin} around your ``fullwidth'' floats to avoid LaTeX trying to put a float in the (non-existing) margin next to it. 
+
 \blockmargin
 \begin{figure}[th]
 \begin{fullwidthfig}
@@ -65,8 +85,6 @@ There is also a command to present your contributions:
 	\caption{Linewidth Figure}
 	\label{LABEL1}
 \end{figure}
-
-You might want to put \detokenize{\blockmargin}, \detokenize{\unblockmargin} around your ``fullwidth'' floats to avoid LaTeX trying to put a float in the (non-existing) margin next to it. 
 
 \blockmargin
 \begin{figure}
@@ -140,6 +158,14 @@ In ``\url{0_config/macros.tex}'' we provide two macros that change the behavior 
  	\item The second macro changes the behavior of \detokenize{\cleardoublepage} such that one-sided and two-sided documents have the same page numbers and numbering. That that there should be a \detokenize{\cleardoublepage} every time LaTeX makes a new page, for example, in front of \detokenize{\part}, \detokenize{\include}, \detokenize{\chapter}, ... 
  \end{itemize} 
 
+\FloatBarrier
+% -----------------------------------------------------
+\paragraph{Other Things}
+
+\begin{itemize}
+ 	\item If you use a \detokenize{\chapter*{CHAPTER}} you might want to add a line \detokenize{\sectionmark{CHAPTER}} to ensure that the header of subsequent pages is set correctly. 
+	\item Using \detokenize{\left}, \detokenize{\right} in footnotes causes latexmk to loop infinitely. 
+\end{itemize}
 
 \cleardoublepage
 

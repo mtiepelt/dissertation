@@ -7,16 +7,27 @@
 %*******************************************************
 %\pdfbookmark[1]{Publications}{publications}
 %
-\chapter*{Publications}\addcontentsline{toc}{chapter}{Publications}%
-%This might come in handy for PhD theses: some ideas and figures have appeared previously in the following publications:
-%\noindent Put your publications from the thesis here. The packages \texttt{multibib} or \texttt{bibtopic} etc. can be used to handle multiple different bibliographies in your document.
+\makeatletter
+%preamble
+\if@twoside%
+   %%% put the stuff for true here (twoside=true)
+   \chapter*{Publications}
+\else%
+   %%% put the stuff for false here (twoside=false)
+   \chapter*{Publications $\cdot$ {\orcidlink{0000-0002-3389-208X}}}
+\fi%  
+\makeatother
+\addcontentsline{toc}{chapter}{Publications}%
+
 % See section 3.8.4
 % http://ftp.fau.de/ctan/macros/latex/contrib/biblatex/doc/biblatex.pdf
 \begin{refsection}[bibliography/own] %The optional argument is a comma-separated list of resources specific to the reference section.
     \small
-    \nocite{*} % is local to to the enclosing refsection
+    \nocite{*} % is local to the enclosing refsection
     {\let\clearpage\relax
     \begin{fullwidth}%
+    The following publications are outcomes of my doctoral research. 
+    \boldname{Tiepelt}{Marcel}{M.}
     \printbibliography[heading=none]
     \end{fullwidth}
     }
@@ -25,12 +36,14 @@
 \cleardoublepage{}
 \chapter*{Open-Access Versions}
 
-\begin{refsection}[bibliography/own_openaccess] %The optional argument is a comma-separated list of resources specific to the reference section.
+\begin{refsection}[bibliography/own_eprint] %The optional argument is a comma-separated list of resources specific to the reference section.
     \small
-    \nocite{*} % is local to to the enclosing refsection
+    \nocite{*} % is local to the enclosing refsection
     {\let\clearpage\relax% 
     \begin{fullwidth}%
-
+    %I am grateful to \emph{ePrint}, \emph{arXiv} and the cryptographic community who continuously provide free access to knowledge. 
+    The following are the available open access versions of my publications. 
+    \boldname{Tiepelt}{Marcel}{M.}
     \printbibliography[heading=none]
     \end{fullwidth}
     }

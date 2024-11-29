@@ -6,8 +6,6 @@
 % -------------------------------------------------------------
 \usepackage{dissertationpackage} % see dissertationpackage.sty
 
-
-
 % -------------------------------------------------------------
 % Full credit for commands to 
 % https://bitbucket.org/amiede/classicthesis/src/master/ClassicThesis.pdf
@@ -34,6 +32,8 @@
 % https://tex.stackexchange.com/questions/1742/automatic-left-and-right-commands/1744#1744
 % -------------------------------------------------------------
 \DeclarePairedDelimiter\autonorm{||}{||}
+
+% Example 
 \newcommand{\norm}[1]{\ensuremath{\autonorm*{#1}}}
 
 % --------------------------------------
@@ -45,7 +45,8 @@
 % Strongly recommended
 % https://tex.stackexchange.com/questions/6448/what-is-the-difference-between-font-encoding-and-input-encoding
 \ifluatex 
-  % None 
+  % Fixes something in TIKZ that would otherwise result in an error with 'pdfminorversion' with pdftex
+  \usepackage{luatex85}
 \else
     \usepackage[utf8]{inputenc}
     \usepackage[T1]{fontenc}
@@ -58,7 +59,6 @@
 % -------------------------------------------------------------
 % Import folders for relative path
 \usepackage{import}
-\usepackage{orcidlink} 
 
 % Figures
 \usepackage{graphicx}
@@ -119,21 +119,27 @@
 \usepackage{microtype}
 \usepackage[section]{placeins}
 
+% -----------------------
+% Penalty to avoid infinite loops in latexmk from float placements (mostly 'cite' in the margins)
+% -----------------------
+% extra penalty for breaking before last line of a paragraph
+\widowpenalty=4000\relax % default is 150
+%extra penalty for breaking after first line of a paragraph
+% \clubpenalty=10000\relax % default is 150
 
 
-\renewcommand*{\bibsetup}{%
-  \interlinepenalty=10000\relax % default is 5000
-  \widowpenalty=10000\relax
-  \clubpenalty=10000\relax
-  \raggedbottom
-  \frenchspacing
-  \biburlsetup}
 
 % -------------------------------------------------------------
 %   HYPERREF SETUP
-%   hyperref should be loaded as late as possible, after all packages unless specified otherwise
+%   ! LOADING HYPERREF DEPERATELY WILL BREAK PDF-A FORMAT !
 % -------------------------------------------------------------
-\usepackage[pdfa]{hyperref}
+% loads hyperref and xolor internally. Must be loadded 'last'
+%\usepackage[a-1b]{pdfx}
+\usepackage[a-3b,mathxmp]{pdfx}
+% NOTE: Meta-data is included via the `diss.xmpdata' file.
+
+% Load after hyperref and xcolor to preserve settings
+\usepackage{orcidlink} 
 
 \hypersetup{%
     linktocpage=true,
@@ -148,11 +154,6 @@
     pdfpagelayout=TwoPageLeft,
     plainpages=false, % http://tex.lickert.net/tipps/destination/index.html
     pdfpagelabels, 
-    % Below does not work with pdftex
-    % pdfauthor = {Kevin Marcel Tiepelt}, 
-    % pdfsubject = {Dissertation: Costing Adversaries on Quantum-secure Cryptography},
-    % pdfkeywords = {post-quantum cryptography, quantum circuits, quantum-annoying, key agreement, lattice enumeration, sphincs, Mersenne, cryptanalysis, LDACS},
-    %
     % hidelinks  % FOR PRINTING 
 }
 
@@ -178,11 +179,65 @@
 \ExplSyntaxOff
 
 
-% ---------------------------------------------------
-%   DRAFTING 
-% ---------------------------------------------------
-%\usepackage{showlabels}
-\usepackage{listings}
-\usepackage{todonotes}
-\usepackage{lipsum}  
 
+
+% ---------------------------------------------------
+%   ToC Link only numbers
+% ---------------------------------------------------
+% https://tex.stackexchange.com/questions/574842/change-hyperlinks-in-table-of-contents-to-section-number-and-page-number-only
+\makeatletter
+\def\numberline#1{%
+ \ifx\Hy@tocdestname\ltx@empty
+  \hb@xt@\@tempdima{#1\hfil}%
+ \else 
+ \hb@xt@\@tempdima{\hyper@linkstart{link}{\Hy@tocdestname}\textcolor{black}{#1}\hyper@linkend\hfil}%
+ \fi}
+\makeatother
+
+
+
+% ---------------------------------------------------
+%   Making CERTAIN Author names BOLD in BIB
+% ---------------------------------------------------
+% https://tex.stackexchange.com/questions/73136/make-specific-author-bold-using-biblatex/327046#327046
+
+
+\def\makenamesetup{%
+  \def\bibnamedelima{~}%
+  \def\bibnamedelimb{ }%
+  \def\bibnamedelimc{ }%
+  \def\bibnamedelimd{ }%
+  \def\bibnamedelimi{ }%
+  \def\bibinitperiod{.}%
+  \def\bibinitdelim{~}%
+  \def\bibinithyphendelim{.-}}    
+\newcommand*{\makename}[2]{\begingroup\makenamesetup\xdef#1{#2}\endgroup}
+
+
+% THIS NEEDS TO BE ADAPTED IN THE FILES; for example in 'Publications.tex'
+\newcommand*{\boldname}[3]{%
+  \def\lastname{#1}%
+  \def\firstname{#2}%
+  \def\firstinit{#3}}
+\boldname{}{}{}
+
+% Patch new definitions
+\renewcommand{\mkbibnamegiven}[1]{%
+  \ifboolexpr{ ( test {\ifdefequal{\firstname}{\namepartgiven}} or test {\ifdefequal{\firstinit}{\namepartgiven}} ) and test {\ifdefequal{\lastname}{\namepartfamily}} }
+  {\mkbibbold{#1}}{#1}%
+}
+
+\renewcommand{\mkbibnamefamily}[1]{%
+  \ifboolexpr{ ( test {\ifdefequal{\firstname}{\namepartgiven}} or test {\ifdefequal{\firstinit}{\namepartgiven}} ) and test {\ifdefequal{\lastname}{\namepartfamily}} }
+  {\mkbibbold{#1}}{#1}%
+}
+
+
+
+
+
+% ---------------------------------------------------
+%   Drafting and Documentation
+% ---------------------------------------------------
+\usepackage{listings}
+\usepackage{lipsum}

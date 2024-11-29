@@ -1,9 +1,15 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{dissertation}[2024/08/01 v0.2 Dissertation Class]
+\ProvidesClass{dissertation}[2024/08/01 v1.0 Dissertation Class]
 
 \DeclareOption{draft}{\PassOptionsToClass{\CurrentOption}{memoir}}
+\DeclareOption{final}{\PassOptionsToClass{\CurrentOption}{memoir}}
 \DeclareOption{oneside}{\PassOptionsToClass{\CurrentOption}{memoir}}
 \DeclareOption{twoside}{\PassOptionsToClass{\CurrentOption}{memoir}}
+
+\newif\ifpdfathreeb
+\pdfathreebfalse
+\DeclareOption{pdfa3b}{\pdfathreebtrue}
+
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{memoir}}
 \ProcessOptions\relax
 
@@ -40,17 +46,26 @@
 \renewcommand{\normalsize}{\fontsize{10pt}{14pt}\selectfont}
 \fontsize{10pt}{14pt}\selectfont
 
+\RequirePackage{beramono}
 \RequirePackage{charter}
 
-\RequirePackage[charter]{mathdesign}
-% fix mathdesigns redefinition of hrulefill
-% see https://tex.stackexchange.com/a/135356/37762
-\def\hrulefill{\leavevmode\leaders \hrule height \rulethickness \hfill\kern\z@}
+\ifpdfathreeb
+  % [charter]mathdesign not PDFA-3b compliant
+  \RequirePackage{amssymb}
+  \usepackage[scale=0.96]{XCharter}
+\else
+  \RequirePackage[charter]{mathdesign}
+  % fix mathdesigns redefinition of hrulefill
+  % see https://tex.stackexchange.com/a/135356/37762
+  \def\hrulefill{\leavevmode\leaders \hrule height \rulethickness \hfill\kern\z@} 
+  %\let\xhrf\hrulefill 
+\fi 
+
+
 % set mathcal font
 % see https://tex.stackexchange.com/a/496198/37762
 \SetMathAlphabet{\mathcal}{normal}{OMS}{zplm}{m}{n}
 
-\RequirePackage{beramono}
 
 
 % -------------------------------------------------------------
@@ -207,8 +222,12 @@
 \renewcommand*{\aftertoctitle}{\par\nobreak\vspace*{-10pt}\hrulefill\vskip\aftertocskip}
 
 %%% Section and Subsection Style %%%
-%\setsecheadstyle{\small\scshape\MakeTextLowercase}
-\setsecheadstyle{\scshape\MakeTextLowercase}
+% PDFA-3B uses bera instead of beramono, and cannot do lower case small caps here
+%\ifpdfathreeb
+%  \setsecheadstyle{\scriptsize\scshape\MakeTextUppercase}
+%\else
+\setsecheadstyle{\small\scshape\MakeTextLowercase} % \MakeTextLowercase makes section letters in appendix to lowercase
+%\fi
 \setsubsecheadstyle{\itshape}
 \setsecnumformat{\llap{\scriptsize\upshape\csname #1secnumformat\endcsname}}
 %
@@ -223,7 +242,7 @@
 
 %%% ToC Styling %%%
 \RequirePackage{ragged2e}
-%\settocdepth{section}
+\settocdepth{section}
 \setsecnumdepth{subsection}
 
 \renewcommand{\cftpartfont}{%
@@ -247,15 +266,33 @@
 \renewcommand{\cftsubsectionafterpnum}{\vspace{2pt}}
 %\renewcommand{\cftsubsubsectionafterpnum}{\vspace{2pt}} % added
 
-\renewcommand{\cftchapterfont}{%
-\scshape\MakeTextLowercase%
-}
 
-\settocpreprocessor{chapter}{%
-\let\tempf@rtoc\f@rtoc%
-\def\f@rtoc{%
-\texorpdfstring{\MakeTextLowercase{\tempf@rtoc}}{\tempf@rtoc}}%
-}
+
+% PDFA-3B uses bera instead of beramono, and cannot do lower case small caps here
+% \ifpdfathreeb
+%   \renewcommand{\cftchapterfont}{%
+%     \scshape\small\MakeTextUppercase%
+%   }
+
+%   \settocpreprocessor{chapter}{%
+%     \let\tempf@rtoc\f@rtoc%
+%     \def\f@rtoc{%
+%     \texorpdfstring{\small\MakeTextUppercase{\tempf@rtoc}}{\tempf@rtoc}}%
+%   }
+% \else
+  \renewcommand{\cftchapterfont}{%
+    \scshape\MakeTextLowercase%
+  }
+
+  \settocpreprocessor{chapter}{%
+    \let\tempf@rtoc\f@rtoc%
+    \def\f@rtoc{%
+    \texorpdfstring{\MakeTextLowercase{\tempf@rtoc}}{\tempf@rtoc}}%
+  }
+%\fi
+
+
+
 
 
 % -------------------------------------------------------------
@@ -332,6 +369,12 @@
     \graphicspath{{#1}}
     \makeatother
 }
+
+
+
+
+
+
 
 % -------------------------------------------------------------
 %   BIBLIOGRAPHY
@@ -464,5 +507,3 @@
 }
 
 \DeclareAutoCiteCommand{footnote}{\footcite}{\footcites}
-
-

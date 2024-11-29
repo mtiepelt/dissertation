@@ -29,15 +29,34 @@ The base file is the wonderful `dissertation.cls` of
 
 https://github.com/pfasante/phd_thesis/
 
-I removed and reorganized a lot of content from the `dissertation.cls` that, to me, appeared to be tailored to their thesis, and which I did not need for mine. As part of these changes I added comments to the `dissertation.cls` that helped me find my way around when modifying the style. 
+I removed and reorganized a lot of content from the `dissertation.cls` that, to me, appeared to be tailored to their thesis, and which I did not need for mine. As part of these changes I added comments to the `dissertation.cls` that helped me find my way around when modifying the style. Part of the file have been moved to a `dissertationpackage.sty`. Main changes are:
 
-#### FrontBackmatter
+#### Support for PDF/A Format
+
+The default font-package, `[charter]{mathdesign}` such that the resulting pdf does not pass all PDF/A rules. 
+If the PDF/A option is given we exchange the package for `[scale=0.96]{XCharter}`. Unfortunately, this results in some changes of the font-size and thus may slightly impact the positioning.
+
+You can verify that your pdf is indeed PDF/A format using, for example, `veraPDF`. Note that the meta-data might say `PDF/A` even if the file does not actually follow the rules of this format. 
+
+
+#### Support for one-sided/ two-sided
+
+Both options should now result in correct positioning of figures and should also generate a PDF with the content on the same page numbers.
+
+
+#### Fronbackmatter
 
 Parts of the FrontBackmatter have been exchanged for the files provided by 
 
 https://bitbucket.org/amiede/classicthesis/src/master/ClassicThesis.pdf
 
 This was just a personal choice. I added a section `Open Access Publications`. 
+
+#### Template and Documentation 
+
+The example document holds a documentation on how the template can be used, caveats and some additional information on changes. 
+
+
 
 ## Structure of Template
 
@@ -56,12 +75,13 @@ to produce a reduced database file.
 ### 0_config 
 
 This folder holds the main configuration file `config.tex`. Please adjust (at least) this to your needs.  
-Further, the folder holds macros and acronyms. 
+Further, the folder holds macros (holds macros for one- and two-sided document support) and acronyms. 
 
 
 ## Makefile 
 
 The Makefile allows to build different aspects of the thesis, for example with/ without glossary or bibliography, which made it easier for me to debug, or just to have a "quick" compilation.  
+
 
 ## TeX-Tools 
 
