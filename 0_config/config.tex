@@ -158,6 +158,19 @@
 }
 
 
+
+% Change acronym link color to black (FOR PRINTING, if one wants other references to be colored.)
+% \renewcommand*{\glstextformat}[1]{\textcolor{Black}{#1}} 
+
+
+% Glossaries need to be loaded AFTER hypersetup, or forward links are broken
+\RequirePackage[acronym
+   % shortcuts,% enable acronym-like commands
+   % nogroupskip,% suppress gap between letter groups
+   % nopostdot% suppress terminating full stop after descriptions
+   ]{glossaries}
+\makeglossaries
+
 % -------------------------------------------------------------
 % cleveref should be loaded 'last', after all packages unless specified otherwise
 % 
