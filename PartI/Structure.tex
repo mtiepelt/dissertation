@@ -8,9 +8,8 @@
 
 The template was designed using 
 
-\begin{itemize}
-	\item LuaHBTex, Version 1.18.0 (TeX Live 2024)
-\end{itemize}
+\lstinline{LuaHBTex, Version 1.18.0 (TeX Live 2024)}, but should also be compatible with \lstinline{pdflatex}. 
+
 
 % -----------------------------------------------------
 \paragraph{Configuration}
@@ -18,11 +17,11 @@ The template was designed using
 \begin{description}
 	\item[Template] The main configs are stored under 
 	\begin{itemize}
-	 	\item \lstinline{/0_config}
+	 	\item \lstinline{/0_config/config.tex} Packages and global settings.
+	 	\item \lstinline{/0_config/macros.tex} Custom macros.
 	 \end{itemize} 
-	 You should adapt \lstinline{/0_config/config.tex}. There is space to add all your ``custom'' packages there.
 	 %
-	 Currently, that holds acronyms and custom macros. I did not put the packages here, because I think keeping them as close to each other as possible makes it easier to avoid conflicts.
+	 The \lstinline{dissertationpackage.sty} should be loaded after \lstinline{/0_config/config.tex} to ensure load sequence for specific packages. 
 \end{description}
 
 

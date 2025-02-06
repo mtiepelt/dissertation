@@ -1,57 +1,46 @@
-
-
-% --------------------------
-%   Embed links for one-sided (digital) vesion into PDF, but print for two-sided (print-version) as footnotes.
-% --------------------------
-\makeatletter
-%preamble
-\if@twoside%
-   %%% put the stuff for true here (twoside=true)
-   \newcommand{\linktocode}[2]{#2\footnote{\url{#1}}}
-\else%
-   %%% put the stuff for false here (twoside=false)
-   \newcommand{\linktocode}[2]{\href{#1}{#2}}
-\fi%  
-\makeatother
-
-
-
-% --------------------------
-%   Match page numbers of one-sided and two-sided document
-% --------------------------
-% https://tex.stackexchange.com/questions/578898/adding-not-removing-blank-pages-onside
-%
-\makeatletter
-% Update \cleardoublepage to be similar in oneside and twoside
-\if@twoside\else
-  \def\cleardoublepage{%
-    \clearpage
-    \ifodd\c@page\else
-      \hbox{}\thispagestyle{cleared}\newpage
-      \if@twocolumn
-        \hbox{}\thispagestyle{cleared}\newpage
-      \fi
-    \fi
-  }
-\fi
-\makeatother
-
-
-
 % -------------------------------------------------------------
-%   ACRONYMS
+% Full credit to 
+% https://bitbucket.org/amiede/classicthesis/src/master/ClassicThesis.pdf
 % -------------------------------------------------------------
 
-% ---------------------------------------------------
-% LINK acronyms only on first occurence
-% https://tex.stackexchange.com/questions/109122/latex-glossaries-hyperref-link-only-the-first-occurance-of-an-entry-in-each-sec
-% ---------------
-%
-% \makeatletter
-% \renewcommand*{\glslinkcheckfirsthyperhook}{%
-%   \ifglsused{\glslabel}%
-%   {%
-%     \setkeys{glslink}{hyper=false}%
-%   }%
-%   {}%
-% }
+% 
+\providecommand{\mLyX}{L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
+\newcommand{\ie}{i.\,e.}
+\newcommand{\Ie}{I.\,e.}
+\newcommand{\eg}{e.\,g.}
+\newcommand{\Eg}{E.\,g.}
+
+
+
+% 
+% % -------------------------------------------------------------
+%   COMMANDS
+% -------------------------------------------------------------
+\newcommand{\contentsourceimpl}[1][]{
+  \begin{tcolorbox}[enhanced,%
+    attach boxed title to top left={xshift=5mm, yshift=-3mm},%
+    colback=white,%
+    colframe=Burgundy, %highlightcolor,%
+    coltitle=black,
+    colbacktitle=white,%
+    title=Content Sources,%
+    boxrule=1pt
+    %fonttitle=\bfseries,%glos
+    %boxed title style={size=small,colframe=red!50!black}]%
+    ]%
+    \medskip 
+    \argtxt% 
+    \begin{description}
+      \item[Publication] $~$ \\ \fullfullcite{\argone}%
+      \item[Open-Access Publication] $ $ \\ \fullfullcite{\argtwo}%
+      \ifx\relax#1\relax%
+      \else%
+      \item[Implementation] $~$\\ #1 %
+      \fi%
+      \item[Contribution] \argthree%
+    \end{description}
+  \end{tcolorbox}
+}
+
+
+\newcommand{\contentsource}[4][The content was largely taken verbatim from below publication.]{\def\argtxt{#1}\def\argone{#2}\def\argtwo{#3}\def\argthree{#4}\contentsourceimpl}

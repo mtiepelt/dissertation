@@ -22,7 +22,6 @@
 % -------------------------------------------------------------
 %   PACKAGES, this load order is required
 % -------------------------------------------------------------
-%%% HyperRef %%%
 \RequirePackage{iftex}
 \ifluatex
   \PassOptionsToPackage{luatex,dvipsnames}{xcolor}
@@ -31,8 +30,26 @@
 \fi 
 \RequirePackage{xcolor} %
 \RequirePackage{paralist} % this must stay here 
-                          % 
-                          % 
+
+
+\RequirePackage{csquotes}
+\RequirePackage{amsmath, amsthm, mathtools} % must be loadded before cleveref
+
+\RequirePackage{xspace} % required for titlepage
+\RequirePackage{adjustbox}
+
+% Strongly recommended
+% https://tex.stackexchange.com/questions/6448/what-is-the-difference-between-font-encoding-and-input-encoding
+\ifluatex 
+  % Fixes something in TIKZ that would otherwise result in an error with 'pdfminorversion' with pdftex
+  \usepackage{luatex85}
+\else
+    \usepackage[utf8]{inputenc}
+    \usepackage[T1]{fontenc}
+\fi
+% Optional for other languages: \usepackage{babel}
+
+
 % -------------------------------------------------------------
 %   COLORS
 % -------------------------------------------------------------
@@ -65,7 +82,6 @@
 % set mathcal font
 % see https://tex.stackexchange.com/a/496198/37762
 \SetMathAlphabet{\mathcal}{normal}{OMS}{zplm}{m}{n}
-
 
 
 % -------------------------------------------------------------
@@ -155,7 +171,6 @@
 \addtolength{\fullwidthlen}{\marginparsep}
 
 
-%\makeatletter
 %preamble
 \if@twoside%
    %%% put the stuff for true here (twoside=true)
@@ -177,7 +192,6 @@
       \end{adjustwidth*}%
     }
 \fi%  
-%\makeatother
 
 
 
@@ -373,9 +387,6 @@
 
 
 
-
-
-
 % -------------------------------------------------------------
 %   BIBLIOGRAPHY
 % -------------------------------------------------------------
@@ -507,3 +518,36 @@
 }
 
 \DeclareAutoCiteCommand{footnote}{\footcite}{\footcites}
+
+
+
+% --------------------------
+%   Embed links for one-sided (digital) vesion into PDF, but print for two-sided (print-version) as footnotes.
+% --------------------------
+%preamble
+\if@twoside%
+   %%% put the stuff for true here (twoside=true)
+   \newcommand{\linktocode}[2]{#2\footnote{\url{#1}}}
+\else%
+   %%% put the stuff for false here (twoside=false)
+   \newcommand{\linktocode}[2]{\href{#1}{#2}}
+\fi%  
+
+
+% --------------------------
+%   Match page numbers of one-sided and two-sided document
+% --------------------------
+% https://tex.stackexchange.com/questions/578898/adding-not-removing-blank-pages-onside
+%
+% Update \cleardoublepage to be similar in oneside and twoside
+\if@twoside\else
+  \def\cleardoublepage{%
+    \clearpage
+    \ifodd\c@page\else
+      \hbox{}\thispagestyle{cleared}\newpage
+      \if@twocolumn
+        \hbox{}\thispagestyle{cleared}\newpage
+      \fi
+    \fi
+  }
+\fi

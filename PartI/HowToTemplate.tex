@@ -53,89 +53,8 @@ There is also a command to present your contributions:
 \end{itemize}
 
 
-\paragraph{Fullwidth}
-
-The classfile offers to use the full width of the page:
-
-\begin{itemize}
-	\item The environment ``fullwidth'' sets the fullwidth for a page. 
-	\item The environment ``fullwidthfig'' can be used to only have part of a page (for example a figure) span the full width. Using ``fullwidthfig'' outside of a float can result issues with the margins. 
-\end{itemize}
 
 
-\paragraph{Floats}
-
-
-You might want to put \detokenize{\blockmargin}, \detokenize{\unblockmargin} around your ``fullwidth'' floats to avoid LaTeX trying to put a float in the (non-existing) margin next to it. 
-
-\blockmargin
-\begin{figure}[th]
-\begin{fullwidthfig}
-\contentsource[TEXT.]{DBLP:conf/ccs/TiepeltD20}{cryptoeprint:2020/367}{Everyone did everything.}[\url{Link to Github}]
-\end{fullwidthfig}
-\end{figure}
-\unblockmargin
-
-\FloatBarrier
-\paragraph{Figures and Captions}
-
-\begin{figure}
-	\includegraphics[width=\linewidth]{example-image-a}
-	%
-	\caption{Linewidth Figure}
-	\label{LABEL1}
-\end{figure}
-
-\blockmargin
-\begin{figure}
-	\begin{fullwidthfig}
-	\includegraphics[width=\linewidth]{example-image-a}
-	%
-	\caption{Fullwidth Figure}
-	\label{LABEL2}
-	\end{fullwidthfig}
-\end{figure}
-\unblockmargin
-
-
-\begin{figure}
-	\begin{sidecaption}{Sidecaption}
-		%
-		\includegraphics[width=\linewidth]{example-image-a}
-		%
-		\label{LABEL3}
-	\end{sidecaption}
-\end{figure}
-
-\begin{figure}
-	%
-	\subbottom[{Subfigure in Memoir class}\label{LABEL4}]{
-          \includegraphics[width=.7\linewidth]{example-image-a}
-    }\\%
-    \subbottom[{Subfigure in Memoir class}\label{LABEL5}]{
-          \includegraphics[width=.7\linewidth]{example-image-b}
-    }%
-    \caption{Caption of subfigure in Memoir.}
-    \label{LABEL6}
-\end{figure}
-
-
-\FloatBarrier
-% -----------------------------------------------------
-\paragraph{Acronyms}
-
-This is a acronym: \gls{AES}, where only the first occurence has a hyperlink to the reference. 
-\begin{itemize}
-	\item This should not have a hyperref: \gls{AES}. 
-	\item You can reset the reference using \detokenize{\glsresetall}, for example, after every new part. 
-\glsresetall{} 
-Not it should be referenced and expanded again: \gls{AES} 
-	\item If you want hyperlinks on every occurrence, search for ``ACRONYMS'' in \lstinline{0_dissconfig/dissertationpackage.sty} and remove the corresponding lines. 
-\end{itemize}
-
-
-
-\FloatBarrier
 % -----------------------------------------------------
 \paragraph{Print vs Digital Version}
 
@@ -145,6 +64,10 @@ We consider the print version to be two-sided, and the digital version to be one
 	\item \detokenize{\documentclass[oneside]{dissertation}}
 	\item \detokenize{\documentclass[twoside]{dissertation}}
 \end{itemize}
+
+Both versions should have the same page numbers. This sometimes causes the one-sided version to have empty pages. If you want only one-sided version, search for ``Match page numbers of one-sided and two-sided document'' in the ``dissertation.sty'' package.
+
+Additionally, the class file ensures that references occur only once on each visible page, that means once on every one-sided pages, and once on every double page for the two-sided version.
 
 In ``\url{0_config/macros.tex}'' we provide two macros that change the behavior of LaTeX according to the option.
 
@@ -158,7 +81,88 @@ In ``\url{0_config/macros.tex}'' we provide two macros that change the behavior 
  	\item The second macro changes the behavior of \detokenize{\cleardoublepage} such that one-sided and two-sided documents have the same page numbers and numbering. That that there should be a \detokenize{\cleardoublepage} every time LaTeX makes a new page, for example, in front of \detokenize{\part}, \detokenize{\include}, \detokenize{\chapter}, ... 
  \end{itemize} 
 
-\FloatBarrier
+
+
+% -----------------------------------------------------
+\paragraph{Fullwidth}
+
+The classfile offers to use the full width of the page:
+
+\begin{itemize}
+	\item The environment ``fullwidth'' sets the fullwidth for a page. 
+	\item The environment ``fullwidthfig'' can be used to only have part of a page (for example a figure) span the full width. Using ``fullwidthfig'' outside of a float can result issues with the margins. 
+\end{itemize}
+
+
+\paragraph{Floats}
+
+You might want to put \detokenize{\blockmargin}, \detokenize{\unblockmargin} around your ``fullwidth'' floats to avoid LaTeX trying to put a float in the (non-existing) margin next to it. 
+
+\blockmargin
+\begin{figure}[th]
+\begin{fullwidthfig}
+	\contentsource[TEXT.]{DBLP:conf/ccs/TiepeltD20}{cryptoeprint:2020/367}{Everyone did everything.}[\url{Link to Github}]
+\end{fullwidthfig}
+\end{figure}
+\unblockmargin
+
+\clearpage
+\paragraph{Figures and Captions}
+
+\begin{figure}[h]
+	\includegraphics[width=\linewidth]{example-image-a}
+	%
+	\caption{Linewidth Figure}
+	\label{LABEL1}
+\end{figure}
+
+\blockmargin
+\begin{figure}[h]
+	\begin{fullwidthfig}
+	\includegraphics[width=\linewidth]{example-image-a}
+	%
+	\caption{Fullwidth Figure}
+	\label{LABEL2}
+	\end{fullwidthfig}
+\end{figure}
+\unblockmargin
+
+
+\begin{figure}[h]
+	\begin{sidecaption}{Sidecaption}
+		%
+		\includegraphics[width=\linewidth]{example-image-a}
+		%
+		\label{LABEL3}
+	\end{sidecaption}
+\end{figure}
+
+\begin{figure}[h]
+	%
+	\centering 
+	\subbottom[{Subfigure in Memoir class}\label{LABEL4}]{
+          \includegraphics[width=.7\linewidth]{example-image-a}
+    }\\%
+    \subbottom[{Subfigure in Memoir class}\label{LABEL5}]{
+          \includegraphics[width=.7\linewidth]{example-image-b}
+    }%
+    \caption{Caption of subfigure in Memoir.}
+    \label{LABEL6}
+\end{figure}
+
+
+\clearpage
+% -----------------------------------------------------
+\paragraph{Acronyms}
+
+This is a acronym: \gls{AES}. In \lstinline{disseratationpackage.sty} there are a few lines that allow to link only the first occurence. Search for ``LINK'', and if you uncomment those lines, then 
+\begin{itemize}
+	\item This should not have a hyperref: \gls{AES}. 
+	\item You can reset the reference using \detokenize{\glsresetall}, for example, after every new part. 
+\glsresetall{} 
+Now it should be referenced and expanded again: \gls{AES} 
+\end{itemize}
+
 % -----------------------------------------------------
 \paragraph{Other Things}
 
@@ -166,9 +170,6 @@ In ``\url{0_config/macros.tex}'' we provide two macros that change the behavior 
  	\item If you use a \detokenize{\chapter*{CHAPTER}} you might want to add a line \detokenize{\sectionmark{CHAPTER}} to ensure that the header of subsequent pages is set correctly. 
 	\item Using \detokenize{\left}, \detokenize{\right} in footnotes causes latexmk to loop infinitely. 
 \end{itemize}
-
-\cleardoublepage
-
 
 
 

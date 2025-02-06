@@ -2,59 +2,6 @@
 \ProvidesPackage{dissertationpackage}[2024/08/01 v1.0 Dissertation Package]
 
 % -------------------------------------------------------------
-%   PACKAGES
-% -------------------------------------------------------------
-\RequirePackage[many]{tcolorbox}
-\RequirePackage{biblatex}
-
-\RequirePackage{csquotes}
-\RequirePackage{amsmath, amsthm, mathtools} % must be loadded before cleveref
-
-% -------------------------------------------------------------
-%   COMMANDS
-% -------------------------------------------------------------
-% PUBLIC
-\newcommand{\contentsource}[4][The content was largely taken verbatim from below publication.]{\def\argtxt{#1}\def\argone{#2}\def\argtwo{#3}\def\argthree{#4}\@contentsourceimpl}
-
-% PRIVATE
-\newcommand{\@contentsourceimpl}[1][]{
-  \begin{tcolorbox}[enhanced,%
-    attach boxed title to top left={xshift=5mm, yshift=-3mm},%
-    colback=white,%
-    colframe=Burgundy, %highlightcolor,%
-    coltitle=black,
-    colbacktitle=white,%
-    title=Content Sources,%
-    boxrule=1pt
-    %fonttitle=\bfseries,%glos
-    %boxed title style={size=small,colframe=red!50!black}]%
-    ]%
-    \medskip 
-    \argtxt% 
-    \begin{description}
-      \item[Publication] $~$ \\ \fullfullcite{\argone}%
-      \item[Open-Access Publication] $ $ \\ \fullfullcite{\argtwo}%
-      \ifx\relax#1\relax%
-      \else%
-      \item[Implementation] $~$\\ #1 %
-      \fi%
-      \item[Contribution] \argthree%
-    \end{description}
-  \end{tcolorbox}
-}
-
-% -------------------------------------------------------------
-% Full credit to 
-% https://bitbucket.org/amiede/classicthesis/src/master/ClassicThesis.pdf
-% 
-\providecommand{\mLyX}{L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
-\newcommand{\ie}{i.\,e.}
-\newcommand{\Ie}{I.\,e.}
-\newcommand{\eg}{e.\,g.}
-\newcommand{\Eg}{E.\,g.}
-% -------------------------------------------------------------
-
-% -------------------------------------------------------------
 %   BIBLIOGRAPHY 
 % -------------------------------------------------------------
 % Other options have to be set at loading time, in dissertation.cls 
@@ -71,3 +18,84 @@
 }
 
 
+
+% ---------------------------------------------------
+%   ToC Link only numbers
+% ---------------------------------------------------
+% https://tex.stackexchange.com/questions/574842/change-hyperlinks-in-table-of-contents-to-section-number-and-page-number-only
+\makeatletter
+\def\numberline#1{%
+ \ifx\Hy@tocdestname\ltx@empty
+  \hb@xt@\@tempdima{#1\hfil}%
+ \else 
+ \hb@xt@\@tempdima{\hyper@linkstart{link}{\Hy@tocdestname}\textcolor{black}{#1}\hyper@linkend\hfil}%
+ \fi}
+\makeatother
+
+
+% ---------------------------------------------------
+% LINK acronyms only on first occurence
+% https://tex.stackexchange.com/questions/109122/latex-glossaries-hyperref-link-only-the-first-occurance-of-an-entry-in-each-sec
+% ---------------
+%
+% \makeatletter
+% \renewcommand*{\glslinkcheckfirsthyperhook}{%
+%   \ifglsused{\glslabel}%
+%   {%
+%     \setkeys{glslink}{hyper=false}%
+%   }%
+%   {}%
+% }
+
+
+
+
+% -------------------------------------------------------------
+%   HYPERREF SETUP
+%   ! LOADING HYPERREF SEPERATELY WILL BREAK PDF-A FORMAT !
+% -------------------------------------------------------------
+% loads hyperref and xolor internally. Must be loadded 'last'
+%\usepackage[a-1b]{pdfx}
+\usepackage[a-3b,mathxmp]{pdfx}
+% NOTE: Meta-data is included via the `diss.xmpdata' file.
+
+% Load after hyperref and xcolor to preserve settings
+\usepackage{orcidlink} 
+
+\hypersetup{%
+    linktoc=page, % {all, page}
+    bookmarks=true,
+    bookmarksdepth = section,
+    colorlinks = true, % false, % FALSE FOR PRINTING
+    linkcolor = Burgundy,
+    urlcolor = Burgundy,
+    citecolor = Burgundy,
+    filecolor = Burgundy, 
+    runcolor = Burgundy, 
+    pdfpagelayout=TwoPageLeft,
+    plainpages=false, % http://tex.lickert.net/tipps/destination/index.html
+    pdfpagelabels, 
+    %
+    %hidelinks  % FOR PRINTING 
+}
+
+
+
+% Change acronym link color to black (FOR PRINTING, if one wants other references to be colored.)
+% \renewcommand*{\glstextformat}[1]{\textcolor{Black}{#1}} 
+
+
+% Glossaries need to be loaded AFTER hypersetup, or forward links are broken
+\RequirePackage[acronym
+   % shortcuts,% enable acronym-like commands
+   % nogroupskip,% suppress gap between letter groups
+   % nopostdot% suppress terminating full stop after descriptions
+   ]{glossaries}
+\makeglossaries
+
+% -------------------------------------------------------------
+% cleveref should be loaded 'last', after all packages unless specified otherwise
+% 
+% https://mirror.funkfreundelandshut.de/latex/macros/latex/contrib/cleveref/cleveref.pdf
+% All theorem related packages should be loaded beofre this
+\usepackage[capitalise,nameinlink,noabbrev]{cleveref} % must be loadded after hyperref, which is loaded in dissertation.cls/ above in pdfx

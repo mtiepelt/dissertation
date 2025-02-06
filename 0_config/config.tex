@@ -1,15 +1,43 @@
 % !TEX encoding = UTF-8 Unicode
 % !TEX root = ../diss.tex
 
-% -------------------------------------------------------------
-%   MAIN PACKAGE
-% -------------------------------------------------------------
-\usepackage{dissertationpackage} % see dissertationpackage.sty
+% -----------------------
+% Penalty to avoid infinite loops in latexmk from float placements (mostly 'cite' in the margins)
+% -----------------------
+% Memoir doc, page 53
+% https://ctan.math.washington.edu/tex-archive/macros/latex/contrib/memoir/memman.pdf
+% set \clubpenalty, etc. to distinctive values for use
+% in tracing page breaks. These values are chosen so that
+% no single penalty will absolutely prohibit a page break, but
+% certain combinations of two or more will.
+\clubpenalty=9996
+\widowpenalty=9999
+\brokenpenalty=4991
+% Reiterate the default value of \redisplaypenalty, for
+% completeness.
+% Set postdisplaypenalty to a fairly high value to discourage a
+% page break between a display and a widow line at the end of a
+% paragraph.
+\predisplaypenalty=10000
+\postdisplaypenalty=1549
+% And then \displaywidowpenalty should be at least as high as
+% \postdisplaypenalty, otherwise in a situation where two displays
+% are separated by two lines, TeX will prefer to break between the
+% two lines, rather than before the first line.
+\displaywidowpenalty=1602
+% 
+% Lets TeX put an extra line at the bottom of a page to avoid
+% a widow on the following page.
+\sloppybottom%
 
+
+
+
+% -------------------------------------------------------------
+%   These commands are currently used in the titlepage etc. 
 % -------------------------------------------------------------
 % Full credit for commands to 
 % https://bitbucket.org/amiede/classicthesis/src/master/ClassicThesis.pdf
-
 \newcommand{\myTitle}{TITLE\xspace}
 \newcommand{\mySubtitle}{\noindent}
 \newcommand{\myDegree}{Dr.-rer nat.\xspace}
@@ -25,167 +53,42 @@
 \newcommand{\myVersion}{\classicthesis}
 % -------------------------------------------------------------
 
-
 % -------------------------------------------------------------
 %   Automatically sized delimiters using package mathtools
 % -------------------------------------------------------------
 % https://tex.stackexchange.com/questions/1742/automatic-left-and-right-commands/1744#1744
 % -------------------------------------------------------------
-\DeclarePairedDelimiter\autonorm{||}{||}
 
-% Example 
+
+% Example, optional 
+\DeclarePairedDelimiter\autonorm{||}{||}
 \newcommand{\norm}[1]{\ensuremath{\autonorm*{#1}}}
 
-% --------------------------------------
-%   Color Defs
-% --------------------------------------
-\colorlet{highlightcolor}{Burgundy!10} % Burgundy provided by dissertation.cls
-
-
-% Strongly recommended
-% https://tex.stackexchange.com/questions/6448/what-is-the-difference-between-font-encoding-and-input-encoding
-\ifluatex 
-  % Fixes something in TIKZ that would otherwise result in an error with 'pdfminorversion' with pdftex
-  \usepackage{luatex85}
-\else
-    \usepackage[utf8]{inputenc}
-    \usepackage[T1]{fontenc}
-\fi
-% Optional for other languages: \usepackage{babel}
 
 
 % -------------------------------------------------------------
-%   CUSTOM PACKAGES
+%   INCLUDE CUSTOM PACKAGES HERE
 % -------------------------------------------------------------
 % Import folders for relative path
-\usepackage{import}
+\usepackage{import} % optional
 
 % Figures
-\usepackage{graphicx}
-\usepackage[font={small}]{caption}
-\usepackage[figuresleft]{rotating}
-\usepackage{csvsimple}
+\usepackage{graphicx} % optional
 
-\usepackage{afterpage} % avoids blank page before landscape
-
-
-% Math
-\usepackage{array}
-\usepackage{marvosym,amsxtra}
-\usepackage{dsfont} % \mathds
-\usepackage{mathdots}
-
-
-\usepackage{cryptocode} %[n,advantage ,operators,sets, adversary,landau,probability,notions,logic,ff,mm,primitives,events,complexity,asymptotics]
-\usepackage{algorithm}  % Floating algorithm Environment
-\usepackage[noend]{algpseudocode}   % Actual algorithm typesetting, [noend] prevents "end if" etc.
-
-
-\usepackage{tikz}
-\usetikzlibrary{matrix,shapes,positioning,chains, calc, decorations.pathreplacing,angles,quotes, automata, backgrounds, plotmarks, shapes.geometric, patterns}
-\usetikzlibrary{quantikz2}
-\usetikzlibrary{mindmap}
-\usetikzlibrary{arrows.meta}
-\usetikzlibrary{tikzmark}
-
-% Tables
-\usepackage{makecell}
-\usepackage{multicol}
-\usepackage{longtable}
-\usepackage{centeredline} 
-
-
-% Boxes
-\usepackage{dashbox}
-
-
-% Misc
-\usepackage{url}
-\usepackage{enumitem}
-\usepackage{siunitx}
-\usepackage{pdflscape}
-\usepackage{xstring} % IfEqCase Macros
-\usepackage{cancel}
-\usepackage{xspace}
-
-
-\usepackage{adjustbox}
-
-\usepackage{booktabs}
-\usepackage{colortbl}
-\usepackage{multirow}
-
-
-\usepackage{microtype}
-\usepackage[section]{placeins}
-
-% -----------------------
-% Penalty to avoid infinite loops in latexmk from float placements (mostly 'cite' in the margins)
-% -----------------------
-% extra penalty for breaking before last line of a paragraph
-\widowpenalty=4000\relax % default is 150
-%extra penalty for breaking after first line of a paragraph
-% \clubpenalty=10000\relax % default is 150
+% Used for \contentsourceimpl and \contentsource in macros.tex
+\usepackage[many]{tcolorbox}
 
 
 
 % -------------------------------------------------------------
-%   HYPERREF SETUP
-%   ! LOADING HYPERREF DEPERATELY WILL BREAK PDF-A FORMAT !
+%   EVERYTHING BELOW IS OPTIONAL and just left here for (your) convenience
 % -------------------------------------------------------------
-% loads hyperref and xolor internally. Must be loadded 'last'
-%\usepackage[a-1b]{pdfx}
-\usepackage[a-3b,mathxmp]{pdfx}
-% NOTE: Meta-data is included via the `diss.xmpdata' file.
-
-% Load after hyperref and xcolor to preserve settings
-\usepackage{orcidlink} 
-
-\hypersetup{%
-    linktocpage=true,
-    bookmarks=true,
-    bookmarksdepth = section,
-    colorlinks = true,
-    linkcolor = Burgundy,
-    urlcolor = Burgundy,
-    citecolor = Burgundy,
-    filecolor = Burgundy, 
-    runcolor = Burgundy, 
-    pdfpagelayout=TwoPageLeft,
-    plainpages=false, % http://tex.lickert.net/tipps/destination/index.html
-    pdfpagelabels, 
-    % hidelinks  % FOR PRINTING 
-}
-
-
-
-% Change acronym link color to black (FOR PRINTING, if one wants other references to be colored.)
-% \renewcommand*{\glstextformat}[1]{\textcolor{Black}{#1}} 
-
-
-% Glossaries need to be loaded AFTER hypersetup, or forward links are broken
-\RequirePackage[acronym
-   % shortcuts,% enable acronym-like commands
-   % nogroupskip,% suppress gap between letter groups
-   % nopostdot% suppress terminating full stop after descriptions
-   ]{glossaries}
-\makeglossaries
-
-% -------------------------------------------------------------
-% cleveref should be loaded 'last', after all packages unless specified otherwise
-% 
-% https://mirror.funkfreundelandshut.de/latex/macros/latex/contrib/cleveref/cleveref.pdf
-% All theorem related packages should be loaded beofre this
-\usepackage[capitalise,nameinlink,noabbrev]{cleveref} % must be loadded after hyperref, which is loaded in dissertation.cls
-
-
 
 % -------------------------------------------------------------
 %   Expand files into tables
 %   http://tug.tug.org/pipermail/texhax/2021-September/025344.html
 %   https://tex.stackexchange.com/questions/583927/misplaced-noalign-error-with-input-in-a-table-after-the-2020-fall-latex-releas
 % -------------------------------------------------------------
-
 \ExplSyntaxOn
 \cs_new:Npn \expandableinput #1
   { \use:c { @@input } { \file_full_name:n {#1} } }
@@ -193,28 +96,10 @@
 
 
 
-
-% ---------------------------------------------------
-%   ToC Link only numbers
-% ---------------------------------------------------
-% https://tex.stackexchange.com/questions/574842/change-hyperlinks-in-table-of-contents-to-section-number-and-page-number-only
-\makeatletter
-\def\numberline#1{%
- \ifx\Hy@tocdestname\ltx@empty
-  \hb@xt@\@tempdima{#1\hfil}%
- \else 
- \hb@xt@\@tempdima{\hyper@linkstart{link}{\Hy@tocdestname}\textcolor{black}{#1}\hyper@linkend\hfil}%
- \fi}
-\makeatother
-
-
-
 % ---------------------------------------------------
 %   Making CERTAIN Author names BOLD in BIB
 % ---------------------------------------------------
 % https://tex.stackexchange.com/questions/73136/make-specific-author-bold-using-biblatex/327046#327046
-
-
 \def\makenamesetup{%
   \def\bibnamedelima{~}%
   \def\bibnamedelimb{ }%
@@ -244,7 +129,6 @@
   \ifboolexpr{ ( test {\ifdefequal{\firstname}{\namepartgiven}} or test {\ifdefequal{\firstinit}{\namepartgiven}} ) and test {\ifdefequal{\lastname}{\namepartfamily}} }
   {\mkbibbold{#1}}{#1}%
 }
-
 
 
 

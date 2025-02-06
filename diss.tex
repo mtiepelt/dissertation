@@ -1,18 +1,24 @@
 % --------------------------
 \documentclass[twoside,final,pdfa3b]{dissertation}
+% ----------------------------
+% Options:
+% 	{draft, final}
+% 	{oneside, twoside}
+% 	{pdfa3b}	This option impacts some fonts.
+% ----------------------------
 
-% ----------------------------
-% pdfa3b option impacts some fonts.
-% ----------------------------
 
 % ---------------------
 % Load dissertation styles and commands
 % ---------------------
 \input{0_config/config}
 
+% dissertation package should be loaded after custom packages
+\usepackage{dissertationpackage} % see dissertationpackage.sty
+
 % ---------------------
 % Load custom commands 
-% % ---------------------
+% ---------------------
 \input{0_config/macros}
 
 
@@ -36,7 +42,6 @@
 %********************************************************************
 % Frontmatter
 %*******************************************************
-%
 
 \frontmatter{}
 

@@ -44,7 +44,7 @@ You can verify that your pdf is indeed PDF/A format using, for example, `veraPDF
 Both options should now result in correct positioning of figures and should also generate a PDF with the content on the same page numbers.
 
 
-#### Fronbackmatter
+#### Frontbackmatter
 
 Parts of the FrontBackmatter have been exchanged for the files provided by 
 
@@ -99,3 +99,10 @@ I used ipe to draw some figures:
 https://ipe.otfried.org/
 
 * ipeexportview.py: Exports views from ipe via iperenderer
+
+
+## Contact
+
+Feel free to reach out to me for questions. 
+
+[Contact]{https://mtiepelt.github.io/Pages/AboutMe.html#contact}
