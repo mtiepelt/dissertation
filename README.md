@@ -105,4 +105,4 @@ https://ipe.otfried.org/
 
 Feel free to reach out to me for questions. 
 
-[Contact]{https://mtiepelt.github.io/Pages/AboutMe.html#contact}
+[Mail Me](https://mtiepelt.github.io/Pages/AboutMe.html#contact)
